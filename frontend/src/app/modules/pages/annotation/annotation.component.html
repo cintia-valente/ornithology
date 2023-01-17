@@ -1,0 +1,44 @@
+<section class="annotation">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-xl-8">
+        <div class="section-title">Cadastro de Anotações</div>
+        <form [formGroup]="annotationForm" class="form-annotation">
+          <div class="form-row">
+            <div class="form-group col-md-8">
+              <label for="inputNome">Local*:</label>
+              <input
+                type="text"
+                class="form-text"
+                formControlName="place"
+                id="place"
+                placeholder="Local"
+                [ngClass]="{
+                  invalid: annotationForm.controls.place.invalid
+                }"
+              />
+              <div
+                class="invalid-field"
+                *ngIf="
+                  annotationForm.controls.place.invalid &&
+                  annotationForm.controls.place.getError('required')
+                "
+              >
+                Campo obrigatório. Por favor, informe um local.
+              </div>
+            </div>
+            <div class="register">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                (click)="addAnnotations()"
+              >
+                Cadastrar
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
