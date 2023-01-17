@@ -12,10 +12,12 @@ export class BirdService {
   options = {
     headers: new HttpHeaders().set('Content-type', 'application/json'),
   };
+
+  private readonly API = 'api/bird';
   constructor(private http: HttpClient) {}
 
   getBirds(): any {
-    return this.http.get(environment.clientUrl + '/api/birds/');
+    return this.http.get(this.API);
   }
 
   //   private handleError(error: HttpErrorResponse) {

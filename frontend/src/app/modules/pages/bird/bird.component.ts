@@ -15,19 +15,15 @@ export class BirdComponent implements OnInit {
   constructor(private birdService: BirdService) {}
 
   ngOnInit(): void {
-    this.getBird;
+    this.getBird();
   }
 
   public getBird() {
-    // this.loading = true;
+    //debugger;
+    //this.loading = true;
 
-    this.birdService.getBirds().subscribe((data: any) => {
-      //this.loading = false;
-      if (data) {
-        this.list = data;
-        console.log(data);
-        console.log(this.list);
-      }
-    });
+    this.birdService
+      .getBirds()
+      .subscribe((data: any) => console.log((this.birds = data)));
   }
 }

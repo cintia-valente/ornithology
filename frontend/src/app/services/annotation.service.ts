@@ -15,17 +15,19 @@ export class AnnotationService {
   options = {
     headers: new HttpHeaders().set('Content-type', 'application/json'),
   };
+
+  private readonly API = 'api/annotation';
   constructor(private http: HttpClient) {}
 
   getAnnotations(): any {
-    return this.http.get(`${environment.clientUrl}annotations/`);
+    return this.http.get(`${this.API}annotations/`);
   }
 
   getAnnotationByBirdId(idBird: String, data: any) {
     let params = data ? { data } : ({} as any);
 
     return this.http.get<Annotation[]>(
-      environment.clientUrl + '/annotationsbybird/' + idBird,
+      this.API + '/annotationsbybird/' + idBird,
       {
         headers: this.options.headers,
         params,
@@ -35,7 +37,7 @@ export class AnnotationService {
 
   postAnnotations(data: Annotation): Observable<Annotation> {
     return this.http.post<Annotation>(
-      environment.clientUrl + '/api/annotations',
+      this.API + '/api/annotations',
       data,
       this.options
     );
@@ -46,14 +48,14 @@ export class AnnotationService {
     data: Annotation
   ): Observable<Annotation> {
     return this.http.put<Annotation>(
-      environment.clientUrl + '/api/annotations/' + idAnnotation,
+      this.API + '/api/annotations/' + idAnnotation,
       data
     );
   }
 
   deleteAnnotations(idAnnotation: string): Observable<Annotation> {
     return this.http.delete<Annotation>(
-      environment.clientUrl + '/api/annotations/' + idAnnotation
+      this.API + '/api/annotations/' + idAnnotation
     );
   }
 
