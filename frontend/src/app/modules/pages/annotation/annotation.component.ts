@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AnnotationService } from 'src/app/services/annotation.service';
 import { ToastrService } from 'ngx-toastr';
 import { HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
+import { AnnotationService } from '../../../services/annotation.service';
 
 @Component({
   selector: 'app-annotation',
@@ -26,7 +26,14 @@ export class AnnotationComponent implements OnInit {
       idAnnotation: [''],
       idBird: [''],
       date: [''],
-      place: ['', [Validators.minLength(3), Validators.maxLength(100)]],
+      place: [
+        '',
+        [
+          Validators.minLength(3),
+          Validators.maxLength(100),
+          Validators.required,
+        ],
+      ],
     });
   }
 
@@ -35,7 +42,7 @@ export class AnnotationComponent implements OnInit {
   addAnnotations() {
     //debugger;
     this.annotationService.postAnnotations(this.annotationForm.value).subscribe(
-      () => {
+      (data: any) => {
         this.loading = false;
         alert('Cadastrado com sucesso');
       }

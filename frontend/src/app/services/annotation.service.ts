@@ -20,7 +20,7 @@ export class AnnotationService {
   constructor(private http: HttpClient) {}
 
   getAnnotations(): any {
-    return this.http.get(`${this.API}annotations/`);
+    return this.http.get(this.API + 'annotations/');
   }
 
   getAnnotationByBirdId(idBird: String, data: any) {
@@ -36,11 +36,7 @@ export class AnnotationService {
   }
 
   postAnnotations(data: Annotation): Observable<Annotation> {
-    return this.http.post<Annotation>(
-      this.API + '/api/annotations',
-      data,
-      this.options
-    );
+    return this.http.post<Annotation>(this.API, data, this.options);
   }
 
   putAnnotations(
