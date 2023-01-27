@@ -34,6 +34,11 @@ public class AnnotationController {
         return ResponseEntity.status(HttpStatus.OK).body(annotationService.findAll());
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Optional<AnnotationModel>> getById(@PathVariable(value = "id") Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(annotationService.findById(id));
+    }
+
     @GetMapping("/bird/{id}")
     public ResponseEntity<List<AnnotationModel>> getByBirdId(@PathVariable(value = "id") Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(annotationService.findByBirdId(id));

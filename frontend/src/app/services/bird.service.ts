@@ -1,11 +1,7 @@
 import { Injectable } from '@angular/core';
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpHeaders,
-} from '@angular/common/http';
-
-import { environment } from 'src/environments/environment';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Bird } from '../model/bird.model';
 
 @Injectable({ providedIn: 'root' })
 export class BirdService {
@@ -16,19 +12,7 @@ export class BirdService {
   private readonly API = 'api/bird';
   constructor(private http: HttpClient) {}
 
-  getBirds(): any {
-    return this.http.get(this.API);
+  getBirds(): Observable<Bird[]> {
+    return this.http.get<Bird[]>(this.API);
   }
-
-  //   private handleError(error: HttpErrorResponse) {
-  //     if (error.error instanceof ErrorEvent) {
-  //       console.error('An error has occurred:', error.error.message);
-  //     } else {
-  //       console.error(
-  //         `Backend returned code ${error.status}, ` + `body: ${error.error}`
-  //       );
-  //       return throwError(error.status);
-  //     }
-  //     return throwError('Something bad happened; please try again later.');
-  //   }
 }

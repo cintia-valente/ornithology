@@ -34,9 +34,14 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(userService.findAll());
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Optional<UserModel>> getById(@PathVariable(value = "id") Long idUser) {
+        return ResponseEntity.status(HttpStatus.OK).body(userService.findById(idUser));
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<Object> updateUser(@PathVariable(value = "id") Long id,
-                                                   @RequestBody UserDto userDto) {
+                                             @RequestBody UserDto userDto) {
         Optional<UserModel> userModelOptional = userService.findById(id);
         if (!userModelOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found.");

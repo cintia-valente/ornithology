@@ -1,1 +1,25 @@
-<p>user works!</p>
+<div class="users">
+  <div *ngIf="!error; else loading">
+    <div *ngFor="let user of users">
+      <div class="user-name">
+        {{ user.name }}
+      </div>
+      <div class="user-email">
+        {{ user.email }}
+      </div>
+      <div class="user-password">
+        {{ user.password }}
+      </div>
+    </div>
+  </div>
+
+  <ng-template #loading>
+    <div class="error" *ngIf="error">
+      Erro ao carregar usuário. Tente novamente mais tarde.
+    </div>
+  </ng-template>
+
+  <div class="register">
+    <button type="submit" class="btn btn-primary">Atualizar</button>
+  </div>
+</div>

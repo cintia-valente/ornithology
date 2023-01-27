@@ -1,9 +1,7 @@
 package com.example.ornithology.services;
 
 import com.example.ornithology.models.AnnotationModel;
-import com.example.ornithology.models.BirdModel;
 import com.example.ornithology.repository.AnnotationRepository;
-import com.example.ornithology.repository.BirdRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;

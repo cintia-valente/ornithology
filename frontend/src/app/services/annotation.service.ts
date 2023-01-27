@@ -1,14 +1,8 @@
 import { Injectable } from '@angular/core';
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpHeaders,
-} from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { environment } from 'src/environments/environment';
 import { Annotation } from '../model/annotation.model';
-import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AnnotationService {
@@ -19,34 +13,37 @@ export class AnnotationService {
   private readonly API = 'api/annotation';
   constructor(private http: HttpClient) {}
 
-  getAnnotations(): any {
-    return this.http.get(this.API + 'annotations/');
+  getAnnotations(): Observable<Annotation[]> {
+    return this.http.get<Annotation[]>(this.API);
   }
 
-  getAnnotationByBirdId(idBird: String, data: any) {
+  getAnnotationById(idAnnotation: any): Observable<Annotation> {
+    return this.http.get<Annotation>(`${this.API}/${idAnnotation}`);
+  }
+
+  getAnnotationByBirdId(
+    idBird: String,
+    data: Annotation
+  ): Observable<Annotation[]> {
     let params = data ? { data } : ({} as any);
 
-    return this.http.get<Annotation[]>(
-      this.API + '/annotationsbybird/' + idBird,
-      {
-        headers: this.options.headers,
-        params,
-      }
-    );
+    return this.http.get<Annotation[]>(this.API + idBird, {
+      headers: this.options.headers,
+      params,
+    });
   }
 
   postAnnotations(data: Annotation): Observable<Annotation> {
-    return this.http.post<Annotation>(this.API, data, this.options);
+    return this.http.post<Annotation>(this.API, data);
   }
 
-  putAnnotations(
+  putAnnotation(
     idAnnotation: string,
-    data: Annotation
+    annotation: Annotation
   ): Observable<Annotation> {
-    return this.http.put<Annotation>(
-      this.API + '/api/annotations/' + idAnnotation,
-      data
-    );
+    console.log(annotation);
+
+    return this.http.put<Annotation>(`${this.API}/${idAnnotation}`, annotation);
   }
 
   deleteAnnotations(idAnnotation: string): Observable<Annotation> {
@@ -54,16 +51,4 @@ export class AnnotationService {
       this.API + '/api/annotations/' + idAnnotation
     );
   }
-
-  //   private handleError(error: HttpErrorResponse) {
-  //     if (error.error instanceof ErrorEvent) {
-  //       console.error('An error has occurred:', error.error.message);
-  //     } else {
-  //       console.error(
-  //         `Backend returned code ${error.status}, ` + `body: ${error.error}`
-  //       );
-  //       return throwError(error.status);
-  //     }
-  //     return throwError('Something bad happened; please try again later.');
-  //   }
 }

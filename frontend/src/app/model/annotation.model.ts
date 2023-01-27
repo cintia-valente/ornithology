@@ -1,8 +1,8 @@
 import { Bird } from './bird.model';
 
 export interface Annotation {
-  idAnnotation?: string;
-  idBird: string;
-  date: Date;
+  idAnnotation?: number;
+  bird: Bird;
+  date?: Date;
   place: string;
 }
