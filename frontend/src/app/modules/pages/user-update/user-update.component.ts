@@ -9,7 +9,7 @@ import { throwError } from 'rxjs';
 @Component({
   selector: 'app-user-update',
   templateUrl: './user-update.component.html',
-  styleUrls: ['./user-update.component.css'],
+  styleUrls: ['./user-update.component.scss'],
 })
 export class UserUpdateComponent {
   userForm: FormGroup;
@@ -17,7 +17,9 @@ export class UserUpdateComponent {
   error: boolean = false;
   loading: boolean = false;
   submmited: boolean = false;
-  formatType: any;
+  formatData: any;
+  formatUser: User[] = [];
+  teste: any[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -41,6 +43,7 @@ export class UserUpdateComponent {
 
   ngOnInit(): void {
     this.findUserById();
+    //this.format();
   }
 
   findUserById() {
@@ -58,12 +61,45 @@ export class UserUpdateComponent {
     });
   }
 
+  // format() {
+  //   debugger;
+  //   this.route.paramMap.subscribe((paramMap) => {
+  //     const idFormat = paramMap.get('idUser');
+  //     console.log(idFormat);
+
+  //     this.formatData = Object.assign({}, idFormat);
+
+  //     this.formatUser = this.users.map((data) => {
+  //       return {
+  //         idUser: this.formatData,
+  //         name: data.name,
+  //         email: data.email,
+  //         password: data.password,
+  //       };
+  //     });
+  //     console.log(this.formatUser);
+  //   });
+
+  //   this.users.forEach((value) => {
+  //     this.teste.push({
+  //       idUser: this.formatData,
+  //       name: value.name,
+  //       email: value.email,
+  //       password: value.password,
+  //     });
+  //   });
+
+  //   console.log(this.teste);
+  //   console.log(this.users);
+  // }
+
   updateUser() {
+    // debugger;
     this.userService
-      .putUser(this.userForm.value.idUser, this.userForm.value)
+      .putUser(this.userForm.value.id, this.userForm.value)
       .subscribe({
         next: () => {
-          if (this.userForm.value.idUser) {
+          if (this.userForm.value.id) {
             alert('Atualizado com sucesso');
           }
         },
@@ -77,7 +113,7 @@ export class UserUpdateComponent {
 
   public loadForm(user: User) {
     this.userForm.patchValue({
-      // id: user.idUser,
+      idUser: user.idUser,
       name: user.name,
       email: user.email,
       password: user.password,

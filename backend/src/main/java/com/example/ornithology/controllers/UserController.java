@@ -55,12 +55,8 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteUser(@PathVariable(value = "id") Long id) {
-        Optional<UserModel> annotationModelOptional = userService.findById(id);
-        if (!annotationModelOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found.");
-        }
-        userService.delete(annotationModelOptional.get());
-        return ResponseEntity.status(HttpStatus.OK).body("User deleted successfully.");
+        userService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 
 }

@@ -17,10 +17,10 @@ public class AnnotationModel implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long idAnnotation;
 
     @ManyToOne
-    @JoinColumn(name = "bird_id", foreignKey = @ForeignKey(name = "fk_bird_annotatiton"))
+    @JoinColumn(name = "bird_idAnnotation", foreignKey = @ForeignKey(name = "fk_bird_annotatiton"))
     private BirdModel bird;
 
     @Column

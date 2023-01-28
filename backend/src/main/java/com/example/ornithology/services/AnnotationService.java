@@ -35,7 +35,8 @@ public class AnnotationService {
     }
 
     @Transactional
-    public void delete(AnnotationModel annotationModel) {
-        annotationRepository.delete(annotationModel);
+    public void delete(Long idAnnotation) {
+        findById(idAnnotation);
+        annotationRepository.deleteById(idAnnotation);
     }
 }

@@ -1,6 +1,5 @@
 package com.example.ornithology.services;
 
-import com.example.ornithology.models.AnnotationModel;
 import com.example.ornithology.models.UserModel;
 import com.example.ornithology.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -32,7 +31,8 @@ public class UserService {
         return userRepository.findById(idUser);
     }
 
-    public void delete(UserModel userModel) {
-        userRepository.delete(userModel);
+    public void delete(Long idUser) {
+        findById(idUser);
+        userRepository.deleteById(idUser);
     }
 }

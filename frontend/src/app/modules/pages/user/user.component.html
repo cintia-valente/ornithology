@@ -10,6 +10,16 @@
       <div class="user-password">
         {{ user.password }}
       </div>
+
+      <div class="delete">
+        <button
+          type="submit"
+          class="btn btn-primary"
+          (click)="deleteUser(user)"
+        >
+          Excluir
+        </button>
+      </div>
     </div>
   </div>
 
@@ -19,7 +29,7 @@
     </div>
   </ng-template>
 
-  <div class="register">
+  <!-- <div class="register">
     <button type="submit" class="btn btn-primary">Atualizar</button>
-  </div>
+  </div> -->
 </div>

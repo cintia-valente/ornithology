@@ -47,8 +47,6 @@ export class AnnotationService {
   }
 
   deleteAnnotations(idAnnotation: string): Observable<Annotation> {
-    return this.http.delete<Annotation>(
-      this.API + '/api/annotations/' + idAnnotation
-    );
+    return this.http.delete<Annotation>(`${this.API}/${idAnnotation}`);
   }
 }

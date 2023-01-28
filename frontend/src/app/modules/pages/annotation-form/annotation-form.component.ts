@@ -113,8 +113,8 @@ export class AnnotationFormComponent implements OnInit {
 
   public loadForm(annotation: Annotation) {
     this.annotationForm.patchValue({
-      // id: annotation.idAnnotation,
-      bird: annotation.bird.idBird,
+      id: annotation.idAnnotation,
+      // bird: annotation.bird.idBird,
       date: annotation.date,
       place: annotation.place,
     });

@@ -25,16 +25,20 @@ export class UserService {
   //   return this.http.put<User>(`${this.API}/${idUser}`, data);
   // }
 
-  putUser(idUser: any, data: User): Observable<User> {
+  putUser(idUser: any, user: User): Observable<User> {
     //debugger;
-    const body = {
-      id: data.idUser,
-      name: data.name,
-      email: data.email,
-      password: data.password,
-    };
-    console.log(body);
+    // const body = {
+    //   id: data.idUser,
+    //   name: data.name,
+    //   email: data.email,
+    //   password: data.password,
+    // };
+    console.log(user);
 
-    return this.http.put<User>(`${this.API}/${idUser}`, body);
+    return this.http.put<User>(`${this.API}/${user.idUser}`, user);
+  }
+
+  deleteUser(idUser: string): Observable<User> {
+    return this.http.delete<User>(`${this.API}/${idUser}`);
   }
 }

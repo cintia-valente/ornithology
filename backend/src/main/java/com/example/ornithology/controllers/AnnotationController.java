@@ -60,12 +60,8 @@ public class AnnotationController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteAnnotation(@PathVariable(value = "id") Long id) {
-        Optional<AnnotationModel> annotationModelOptional = annotationService.findById(id);
-        if (!annotationModelOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Annotation not found.");
-        }
-        annotationService.delete(annotationModelOptional.get());
-        return ResponseEntity.status(HttpStatus.OK).body("Annotation deleted successfully.");
+        annotationService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 
 }
