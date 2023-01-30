@@ -1,6 +1,10 @@
 package com.example.ornithology.services;
 
+import com.example.ornithology.dto.AnnotationDto;
+import com.example.ornithology.dto.UserDto;
 import com.example.ornithology.models.AnnotationModel;
+import com.example.ornithology.models.BirdModel;
+import com.example.ornithology.models.UserModel;
 import com.example.ornithology.repository.AnnotationRepository;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +36,17 @@ public class AnnotationService {
 
     public List<AnnotationModel> findByBirdId(Long idBird) {
         return annotationRepository.findByBirdId(idBird);
+    }
+
+    public AnnotationModel update(Long idAnnotation, AnnotationDto annotationDto) {
+        Optional<AnnotationModel> annotationModelOptional  = annotationRepository.findById(idAnnotation);
+
+        var annotationModel = annotationModelOptional.get();
+
+        annotationModel.setBird(annotationDto.getBird());
+        annotationModel.setDate(annotationDto.getDate());
+        annotationModel.setPlace(annotationDto.getPlace());
+        return annotationRepository.save(annotationModel);
     }
 
     @Transactional

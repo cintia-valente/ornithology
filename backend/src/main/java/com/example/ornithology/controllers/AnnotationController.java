@@ -45,17 +45,9 @@ public class AnnotationController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateAnnotation(@PathVariable(value = "id") Long id,
-                                                   @RequestBody AnnotationDto annotationDto) {
-        Optional<AnnotationModel> annotationModelOptional = annotationService.findById(id);
-        if (!annotationModelOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Annotation not found.");
-        }
-        var annotationModel = annotationModelOptional.get();
-        annotationModel.setBird(annotationDto.getBird());
-        annotationModel.setDate(annotationDto.getDate());;
-        annotationModel.setPlace(annotationDto.getPlace());
-        return ResponseEntity.status(HttpStatus.OK).body(annotationService.save(annotationModel));
+    public ResponseEntity<AnnotationModel> updateAnnotation(@PathVariable(value = "id") Long id,
+                                                @RequestBody AnnotationDto annotationDto) {
+        return ResponseEntity.ok().body(annotationService.update(id, annotationDto));
     }
 
     @DeleteMapping("/{id}")
