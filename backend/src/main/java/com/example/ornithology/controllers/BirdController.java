@@ -38,12 +38,8 @@ public class BirdController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteBird(@PathVariable(value = "id") Long id) {
-        Optional<BirdModel> birdModel = birdService.findById(id);
-        if (!birdModel.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Bird not found.");
-        }
-        birdService.delete(birdModel.get());
-        return ResponseEntity.status(HttpStatus.OK).body("Bird deleted successfully.");
+        birdService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 
 }

@@ -5,24 +5,24 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AnnotationFormComponent } from './modules/pages/annotation-form/annotation-form.component';
 import { BirdComponent } from './modules/pages/bird/bird.component';
-import { UserComponent } from './modules/pages/user/user.component';
 import { LoginComponent } from './modules/pages/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { AnnotationListComponent } from './modules/pages/annotation-list/annotation-list.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { UserUpdateComponent } from './modules/pages/user-update/user-update.component';
+import { UserListComponent } from './modules/pages/user-list/user-list.component';
+import { UserFormComponent } from './modules/pages/user-form/user-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AnnotationFormComponent,
     BirdComponent,
-    UserComponent,
     LoginComponent,
     AnnotationListComponent,
-    UserUpdateComponent,
+    UserListComponent,
+    UserFormComponent,
   ],
   imports: [
     BrowserModule,

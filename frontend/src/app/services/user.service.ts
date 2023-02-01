@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { User } from '../model/user.model';
 import { Observable } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -11,31 +12,22 @@ export class UserService {
   };
 
   private readonly API = 'api/user';
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private toastr: ToastrService) {}
 
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.API);
   }
 
-  getUserById(idUser: any): Observable<User> {
+  getUserById(idUser: string): Observable<User> {
     return this.http.get<User>(`${this.API}/${idUser}`);
   }
 
-  // putUser(idUser: any, data: User): Observable<User> {
-  //   return this.http.put<User>(`${this.API}/${idUser}`, data);
-  // }
+  postUsers(annotation: User): Observable<User> {
+    return this.http.post<User>(this.API, annotation);
+  }
 
-  putUser(idUser: any, user: User): Observable<User> {
-    //debugger;
-    // const body = {
-    //   id: data.idUser,
-    //   name: data.name,
-    //   email: data.email,
-    //   password: data.password,
-    // };
-    console.log(user);
-
-    return this.http.put<User>(`${this.API}/${user.idUser}`, user);
+  putUser(idUser: string, user: User): Observable<User> {
+    return this.http.put<User>(`${this.API}/${idUser}`, user);
   }
 
   deleteUser(idUser: string): Observable<User> {

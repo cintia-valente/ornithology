@@ -1,6 +1,6 @@
+import { BirdService } from './../../../services/bird.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
 import { HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
 import { AnnotationService } from '../../../services/annotation.service';
@@ -19,20 +19,34 @@ export class AnnotationFormComponent implements OnInit {
   error: boolean = false;
   loading: boolean = false;
   annotationFormData: any;
+  annotations: Annotation[] = [];
   annotation: Annotation[] = [];
   birds: Bird[] = [];
   isEdit: boolean = false;
   formData: any;
+  currentBird: any = {};
+  birdData: Array<{
+    id: string;
+    image?: string;
+    namePtbr: string;
+    nameEnglish: string;
+    nameLatin: string;
+    size: string;
+    genre: string;
+    color: string;
+    family: string;
+    habitat: string;
+  }> = [];
 
   constructor(
     private formBuilder: FormBuilder,
     private annotationService: AnnotationService,
-    public toastr: ToastrService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private birdService: BirdService
   ) {
     this.annotationForm = this.formBuilder.group({
       idAnnotation: [''],
-      idBird: [''],
+      bird: [],
       date: [''],
       place: [
         '',
@@ -46,10 +60,12 @@ export class AnnotationFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.listBirds();
     this.findAnnotationById();
   }
 
   findAnnotationById() {
+    // debugger;
     this.route.paramMap.subscribe((paramMap) => {
       const id = paramMap.get('id');
       if (id === null) {
@@ -57,8 +73,9 @@ export class AnnotationFormComponent implements OnInit {
       }
       this.loading = true;
       this.annotationService.getAnnotationById(id).subscribe((data) => {
-        this.loadForm(data);
         this.isEdit = true;
+        this.loadForm(data);
+
         this.loading = false;
       });
     });
@@ -66,12 +83,11 @@ export class AnnotationFormComponent implements OnInit {
 
   onSubmit() {
     this.submmited = true;
-    if (this.annotationForm.valid) {
-      if (this.annotationForm.value.id) {
-        this.updateAnnotations();
-      } else {
-        this.addAnnotations();
-      }
+
+    if (this.annotationForm.value.idAnnotation) {
+      this.updateAnnotations();
+    } else {
+      this.addAnnotations();
     }
   }
 
@@ -81,6 +97,7 @@ export class AnnotationFormComponent implements OnInit {
       .subscribe({
         next: () => {
           this.loading = false;
+
           alert('Cadastrado com sucesso');
         },
         error: (err: HttpErrorResponse) => {
@@ -99,6 +116,8 @@ export class AnnotationFormComponent implements OnInit {
       )
       .subscribe({
         next: () => {
+          this.loading = false;
+
           if (this.annotationForm.value.idAnnotation) {
             alert('Atualizado com sucesso');
           }
@@ -112,12 +131,61 @@ export class AnnotationFormComponent implements OnInit {
   }
 
   public loadForm(annotation: Annotation) {
+    //debugger;
     this.annotationForm.patchValue({
-      id: annotation.idAnnotation,
-      // bird: annotation.bird.idBird,
+      idAnnotation: annotation.idAnnotation,
+      bird: annotation.bird,
       date: annotation.date,
       place: annotation.place,
     });
-    console.log(this.annotationForm);
+
+    this.currentBird = this.annotationForm.value.bird.id;
+
+    //   this.annotationForm.get('bird').setValue(this.currentBird);
+
+    // annotation.bird.forEach((indicator) =>
+    //this.setIndicatorTrue(indicator)
+
+    // this.currentBird = this.annotationForm.value.bird.id;
+
+    // console.log(this.birds);
+
+    // this.currentBird = this.annotationForm.value.bird.id;
+    //this.annotationForm.value.idAnnotation.bird.id.setValue(this.currentBird);
+  }
+
+  // setIndicatorTrue(indicatorParam: Bird) {
+  //   const id = this.annotations.findIndex(
+  //     (indicator) => indicator == indicatorParam.id
+  //   );
+
+  //this.getIndicatorsForm.at(id).setValue(true);
+
+  listBirds() {
+    //debugger;
+    const birdData = [];
+    this.error = false;
+
+    this.birdService.getBirds().subscribe({
+      next: (data) => {
+        this.birds = data;
+        data.forEach((value, index) => {
+          birdData.push(this.birds[index]);
+        });
+      },
+    });
+  }
+  // error: (err: HttpErrorResponse) => {
+  //   this.error = true;
+
+  //   return throwError(() => err);
+  // },
+
+  //  console.log(this.setIndicatorTrue(this.));
+
+  onChangeBirds(option: any) {
+    //debugger;
+    this.annotationForm.value.bird.id.setValue(option);
+    this.currentBird = option;
   }
 }

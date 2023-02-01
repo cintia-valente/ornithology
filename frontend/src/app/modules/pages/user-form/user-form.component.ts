@@ -1,4 +1,4 @@
-import { UserService } from './../../../services/user.service';
+import { UserService } from '../../../services/user.service';
 import { User } from 'src/app/model/user.model';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -7,11 +7,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
 
 @Component({
-  selector: 'app-user-update',
-  templateUrl: './user-update.component.html',
-  styleUrls: ['./user-update.component.scss'],
+  selector: 'app-user-form',
+  templateUrl: './user-form.component.html',
+  styleUrls: ['./user-form.component.scss'],
 })
-export class UserUpdateComponent {
+export class UserFormComponent {
   userForm: FormGroup;
   public users: User[] = [];
   error: boolean = false;
@@ -20,6 +20,7 @@ export class UserUpdateComponent {
   formatData: any;
   formatUser: User[] = [];
   teste: any[] = [];
+  isEdit: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -43,11 +44,9 @@ export class UserUpdateComponent {
 
   ngOnInit(): void {
     this.findUserById();
-    //this.format();
   }
 
   findUserById() {
-    // debugger;
     this.route.paramMap.subscribe((paramMap) => {
       const id = paramMap.get('id');
       if (id === null) {
@@ -56,50 +55,47 @@ export class UserUpdateComponent {
       this.loading = true;
       this.userService.getUserById(id).subscribe((data) => {
         this.loadForm(data);
+        this.isEdit = true;
         this.loading = false;
       });
     });
   }
 
-  // format() {
-  //   debugger;
-  //   this.route.paramMap.subscribe((paramMap) => {
-  //     const idFormat = paramMap.get('idUser');
-  //     console.log(idFormat);
+  onSubmit() {
+    this.submmited = true;
 
-  //     this.formatData = Object.assign({}, idFormat);
+    if (this.userForm.value.idUser) {
+      this.updateUser();
+    } else {
+      this.addUsers();
+    }
+  }
 
-  //     this.formatUser = this.users.map((data) => {
-  //       return {
-  //         idUser: this.formatData,
-  //         name: data.name,
-  //         email: data.email,
-  //         password: data.password,
-  //       };
-  //     });
-  //     console.log(this.formatUser);
-  //   });
+  addUsers() {
+    this.error = false;
+    this.userService.postUsers(this.userForm.value).subscribe({
+      next: () => {
+        this.loading = false;
 
-  //   this.users.forEach((value) => {
-  //     this.teste.push({
-  //       idUser: this.formatData,
-  //       name: value.name,
-  //       email: value.email,
-  //       password: value.password,
-  //     });
-  //   });
+        alert('Cadastrado com sucesso');
+      },
+      error: (err: HttpErrorResponse) => {
+        this.error = true;
+        alert(`Erro ao cadastrar anotação. Tente novamente mais tarde.`);
 
-  //   console.log(this.teste);
-  //   console.log(this.users);
-  // }
+        return throwError(() => err);
+      },
+    });
+  }
 
   updateUser() {
-    // debugger;
     this.userService
-      .putUser(this.userForm.value.id, this.userForm.value)
+      .putUser(this.userForm.value.idUser, this.userForm.value)
       .subscribe({
         next: () => {
-          if (this.userForm.value.id) {
+          this.loading = false;
+
+          if (this.userForm.value.idUser) {
             alert('Atualizado com sucesso');
           }
         },
@@ -118,5 +114,6 @@ export class UserUpdateComponent {
       email: user.email,
       password: user.password,
     });
+    console.log(this.userForm);
   }
 }

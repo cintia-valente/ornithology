@@ -1,10 +1,8 @@
 package com.example.ornithology.services;
 
 import com.example.ornithology.dto.AnnotationDto;
-import com.example.ornithology.dto.UserDto;
 import com.example.ornithology.models.AnnotationModel;
 import com.example.ornithology.models.BirdModel;
-import com.example.ornithology.models.UserModel;
 import com.example.ornithology.repository.AnnotationRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +14,12 @@ import java.util.Optional;
 public class AnnotationService {
 
     final AnnotationRepository annotationRepository;
+    final BirdService birdService;
 
-    public AnnotationService(AnnotationRepository annotationRepository) {
+    public AnnotationService(AnnotationRepository annotationRepository, BirdService birdService) {
 
         this.annotationRepository = annotationRepository;
+        this.birdService = birdService;
     }
     @Transactional
     public AnnotationModel save(AnnotationModel annotationModel) {
@@ -40,12 +40,25 @@ public class AnnotationService {
 
     public AnnotationModel update(Long idAnnotation, AnnotationDto annotationDto) {
         Optional<AnnotationModel> annotationModelOptional  = annotationRepository.findById(idAnnotation);
+        Optional<BirdModel> birdModelOptional = birdService.findById(annotationModelOptional.get().getBird().getId());
+
+        birdModelOptional.get().setImage(annotationDto.getBird().getImage());
+        birdModelOptional.get().setNamePtbr(annotationDto.getBird().getNamePtbr());
+        birdModelOptional.get().setNameEnglish(annotationDto.getBird().getNameEnglish());
+        birdModelOptional.get().setNameLatin(annotationDto.getBird().getNameLatin());
+        birdModelOptional.get().setSize(annotationDto.getBird().getSize());
+        birdModelOptional.get().setGenre(annotationDto.getBird().getGenre());
+        birdModelOptional.get().setColor(annotationDto.getBird().getColor());
+        birdModelOptional.get().setFamily(annotationDto.getBird().getFamily());
+        birdModelOptional.get().setHabitat(annotationDto.getBird().getHabitat());
+        birdService.save(birdModelOptional.get());
 
         var annotationModel = annotationModelOptional.get();
 
         annotationModel.setBird(annotationDto.getBird());
         annotationModel.setDate(annotationDto.getDate());
         annotationModel.setPlace(annotationDto.getPlace());
+
         return annotationRepository.save(annotationModel);
     }
 

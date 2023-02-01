@@ -13,7 +13,6 @@ import { BirdService } from '../../../services/bird.service';
 export class BirdComponent implements OnInit {
   public birds: Bird[] = [];
   error: boolean = false;
-  loading: boolean = true;
 
   constructor(private birdService: BirdService) {}
 
@@ -23,14 +22,13 @@ export class BirdComponent implements OnInit {
 
   listBird() {
     this.error = false;
-    //this.loading = true;
 
     this.birdService.getBirds().subscribe({
       next: (data: Bird[]) => console.log((this.birds = data)),
 
       error: (err: HttpErrorResponse) => {
-        // this.loading = false;
         this.error = true;
+        alert(`Erro ao carregar aves. Tente novamente mais tarde.`);
 
         return throwError(() => err);
       },

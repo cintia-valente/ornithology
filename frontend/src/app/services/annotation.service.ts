@@ -1,8 +1,11 @@
+import { Bird } from 'src/app/model/bird.model';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
 
 import { Annotation } from '../model/annotation.model';
 import { Observable } from 'rxjs';
+import { BirdService } from './bird.service';
 
 @Injectable({ providedIn: 'root' })
 export class AnnotationService {
@@ -11,7 +14,11 @@ export class AnnotationService {
   };
 
   private readonly API = 'api/annotation';
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private toastr: ToastrService,
+    private birdService: BirdService
+  ) {}
 
   getAnnotations(): Observable<Annotation[]> {
     return this.http.get<Annotation[]>(this.API);
@@ -21,29 +28,45 @@ export class AnnotationService {
     return this.http.get<Annotation>(`${this.API}/${idAnnotation}`);
   }
 
-  getAnnotationByBirdId(
-    idBird: String,
-    data: Annotation
-  ): Observable<Annotation[]> {
-    let params = data ? { data } : ({} as any);
-
-    return this.http.get<Annotation[]>(this.API + idBird, {
-      headers: this.options.headers,
-      params,
-    });
+  getAnnotationByBirdId(id: string): Observable<Annotation[]> {
+    return this.http.get<Annotation[]>(`${this.API}/bird/${id}`);
   }
 
-  postAnnotations(data: Annotation): Observable<Annotation> {
-    return this.http.post<Annotation>(this.API, data);
+  postAnnotations(annotation: Annotation): Observable<Annotation> {
+    return this.http.post<Annotation>(this.API, annotation);
   }
+
+  // putAnnotation(
+  //   idAnnotation: string,
+  //   annotation: Annotation
+  // ): Observable<Annotation> {
+  //   console.log(annotation);
+
+  //   return this.http.put<Annotation>(`${this.API}/${idAnnotation}`, annotation);
+  // }
 
   putAnnotation(
-    idAnnotation: string,
+    idAnnotation: any,
     annotation: Annotation
   ): Observable<Annotation> {
-    console.log(annotation);
+    const body = {
+      bird: {
+        idBird: annotation.bird.idBird,
+        namePtbr: annotation.bird.namePtbr,
+        nameEnglish: annotation.bird.nameEnglish,
+        nameLatin: annotation.bird.nameLatin,
+        size: annotation.bird.size,
+        genre: annotation.bird.genre,
+        color: annotation.bird.color,
+        family: annotation.bird.family,
+        habitat: annotation.bird.habitat,
+      },
+      date: annotation.date,
+      place: annotation.place,
+    };
 
-    return this.http.put<Annotation>(`${this.API}/${idAnnotation}`, annotation);
+    this.birdService.postBirds(body.bird);
+    return this.http.put<Annotation>(`${this.API}/${idAnnotation}`, body);
   }
 
   deleteAnnotations(idAnnotation: string): Observable<Annotation> {

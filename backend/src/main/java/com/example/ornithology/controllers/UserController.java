@@ -40,17 +40,9 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateUser(@PathVariable(value = "id") Long id,
-                                             @RequestBody UserDto userDto) {
-        Optional<UserModel> userModelOptional = userService.findById(id);
-        if (!userModelOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found.");
-        }
-        var userModel = userModelOptional.get();
-        userModel.setName(userDto.getName());
-        userModel.setEmail(userDto.getEmail());
-        userModel.setPassword(userDto.getPassword());
-        return ResponseEntity.status(HttpStatus.OK).body(userService.save(userModel));
+    public ResponseEntity<UserModel> updateUser(@PathVariable(value = "id") Long id,
+                                                @RequestBody UserDto userDto) {
+        return ResponseEntity.ok().body(userService.update(id, userDto));
     }
 
     @DeleteMapping("/{id}")

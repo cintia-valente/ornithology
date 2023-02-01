@@ -2,29 +2,23 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-xl-8">
-        <div class="section-title">Cadastro de Anotações</div>
+        <div class="section-title">Anotações</div>
         <form [formGroup]="annotationForm" class="form-annotation">
           <div class="form-row">
             <div class="form-group col-md-8">
-              <!-- <label for="inputUnidade">Ave*: </label>
+              <label for="inputBird">Ave*: </label>
               <select
-                (change)="submit()"
-                formControlName="bird"
-                id="bird"
-                (selectionChange)="getSelectedUnidade()"
+                (onChange)="onChangeBirds($event)"
                 class="form-control"
-                [ngClass]="{
-                  'is-invalid':
-                    annotationForm.get('bird').touched &&
-                    annotationForm.get('bird').invalid
-                }"
-                required
+                id="bird"
+                (selectionChange)="listBirds()"
+                class="form-control"
               >
                 <option value="" selected>Selecione....</option>
-                <option *ngFor="let bird of birds" [value]="bird.idBird">
-                  {{ bird.name }}
+                <option *ngFor="let bird of birds" [value]="bird.namePtbr">
+                  {{ bird.namePtbr }}
                 </option>
-              </select> -->
+              </select>
               <!-- <label for="inputNome">Data*:</label>
               <input
                 type="text"
@@ -62,7 +56,6 @@
                 type="submit"
                 class="btn btn-primary"
                 (click)="onSubmit()"
-                [disabled]="annotationForm.invalid"
               >
                 {{ isEdit ? "Alterar" : "Salvar" }}
               </button>

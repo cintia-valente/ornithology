@@ -15,4 +15,8 @@ export class BirdService {
   getBirds(): Observable<Bird[]> {
     return this.http.get<Bird[]>(this.API);
   }
+
+  postBirds(bird: Bird): Observable<Bird> {
+    return this.http.post<Bird>(this.API, bird);
+  }
 }

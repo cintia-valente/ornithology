@@ -170,7 +170,7 @@ public class AnnotationControllerTest {
         );
 
 
-        var response = assertDoesNotThrow(() -> annotationController.updateAnnotation(annotationModel.getId(), annotationDto));
+        var response = assertDoesNotThrow(() -> annotationController.updateAnnotation(annotationModel.getIdAnnotation(), annotationDto));
         assertNotNull(response);
 
     }
@@ -208,7 +208,7 @@ public class AnnotationControllerTest {
                 "Amazonas"
         );
 
-        var response = assertDoesNotThrow(() -> annotationController.deleteAnnotation(annotationModel.getId()));
+        var response = assertDoesNotThrow(() -> annotationController.deleteAnnotation(annotationModel.getIdAnnotation()));
         assertNotNull(response);
 
     }

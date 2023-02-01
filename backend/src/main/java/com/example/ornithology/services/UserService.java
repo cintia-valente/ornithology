@@ -1,5 +1,6 @@
 package com.example.ornithology.services;
 
+import com.example.ornithology.dto.UserDto;
 import com.example.ornithology.models.UserModel;
 import com.example.ornithology.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,15 @@ public class UserService {
         return userRepository.findById(idUser);
     }
 
+    public UserModel update(Long idUser, UserDto userDto) {
+        Optional<UserModel> userModelOptional  = userRepository.findById(idUser);
+        var userModel = userModelOptional.get();
+
+        userModel.setName(userDto.getName());
+        userModel.setEmail(userDto.getEmail());
+        userModel.setPassword(userDto.getPassword());
+        return userRepository.save(userModel);
+    }
     public void delete(Long idUser) {
         findById(idUser);
         userRepository.deleteById(idUser);

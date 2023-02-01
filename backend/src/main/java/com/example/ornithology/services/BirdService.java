@@ -34,7 +34,8 @@ public class BirdService {
     }
 
     @Transactional
-    public void delete(BirdModel birdModel) {
-        birdRepository.delete(birdModel);
+    public void delete(Long idBird) {
+        findById(idBird);
+        birdRepository.deleteById(idBird);
     }
 }

@@ -1,4 +1,4 @@
-<section class="user">
+<section class="user-form">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-xl-8">
@@ -24,13 +24,15 @@
                 placeholder="nome@email.com"
               />
             </div>
+
             <div class="register">
               <button
+                *ngIf="!error; else loading"
                 type="submit"
                 class="btn btn-primary"
-                (click)="updateUser()"
+                (click)="onSubmit()"
               >
-                Alterar
+                {{ isEdit ? "Alterar" : "Salvar" }}
               </button>
             </div>
           </div>
@@ -39,3 +41,9 @@
     </div>
   </div>
 </section>
+
+<ng-template #loading>
+  <div class="error" *ngIf="error">
+    Erro ao adicionar usuário. Tente novamente mais tarde.
+  </div>
+</ng-template>

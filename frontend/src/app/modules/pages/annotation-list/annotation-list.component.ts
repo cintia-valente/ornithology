@@ -1,8 +1,11 @@
+import { Bird } from 'src/app/model/bird.model';
+import { BirdService } from './../../../services/bird.service';
 import { AnnotationService } from './../../../services/annotation.service';
 import { Component } from '@angular/core';
 import { Annotation } from 'src/app/model/annotation.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-annotation-list',
@@ -10,10 +13,30 @@ import { throwError } from 'rxjs';
   styleUrls: ['./annotation-list.component.scss'],
 })
 export class AnnotationListComponent {
+  annotationForm: FormGroup;
   public annotations: Annotation[] = [];
   error: boolean = false;
+  birds: Bird[] = [];
 
-  constructor(private annotationService: AnnotationService) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private annotationService: AnnotationService,
+    private birdService: BirdService
+  ) {
+    this.annotationForm = this.formBuilder.group({
+      idAnnotation: [''],
+      bird: [],
+      date: [''],
+      place: [
+        '',
+        [
+          Validators.minLength(3),
+          Validators.maxLength(100),
+          Validators.required,
+        ],
+      ],
+    });
+  }
 
   ngOnInit(): void {
     this.listAnnotations();
@@ -27,6 +50,7 @@ export class AnnotationListComponent {
 
       error: (err: HttpErrorResponse) => {
         this.error = true;
+        alert(`Erro ao carregar anotações. Tente novamente mais tarde.`);
 
         return throwError(() => err);
       },
@@ -36,24 +60,17 @@ export class AnnotationListComponent {
   deleteAnnotation(annotation: Annotation) {
     this.annotationService
       .deleteAnnotations(annotation.idAnnotation)
-      .subscribe(() => {
-        alert(`Anotação excluída com sucesso!`);
-        this.listAnnotations();
+      .subscribe({
+        next: () => {
+          this.listAnnotations();
+          alert('Anotação ecluída com sucesso.');
+        },
+        error: (err: HttpErrorResponse) => {
+          this.error = true;
+          alert('Erro ao excluir anotação. Tente novamente mais tarde.');
+
+          return throwError(() => err);
+        },
       });
   }
-  // getAnnotationsForBird(){
-  //   this.paciente = [];
-  //   this.atendimentoService.getAtendimentoPorUnidade(this.listForm.get('unidade').value).subscribe({
-  //     next: atendimentosEncontrados => {
-  //       atendimentosEncontrados.forEach(atendimento => {
-  //         const atendimentoPaciente = atendimento.paciente as Paciente
-  //         console.log(atendimento)
-  //       // Verifica se o paciente já está na lista para adicionar
-  //       if (this.paciente.every(paciente => paciente._id !== atendimentoPaciente._id)){
-  //           this.paciente.unshift(atendimentoPaciente);
-  //           console.log(atendimento)
-  //       }
-  //     }
-  //   });
-  // }
 }

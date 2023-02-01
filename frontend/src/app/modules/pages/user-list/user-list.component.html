@@ -1,0 +1,25 @@
+<section class="user-list">
+  <div *ngFor="let user of users">
+    <div class="user-name">
+      {{ user.name }}
+    </div>
+    <div class="user-email">
+      {{ user.email }}
+    </div>
+    <div class="user-password">
+      {{ user.password }}
+    </div>
+
+    <div class="delete">
+      <button type="submit" class="btn btn-primary" (click)="deleteUser(user)">
+        Excluir
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- <ng-template #loading>
+  <div class="error" *ngIf="error">
+    Erro ao carregar usuário. Tente novamente mais tarde.
+  </div>
+</ng-template> -->
