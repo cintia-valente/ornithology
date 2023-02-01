@@ -1,5 +1,5 @@
 export interface Bird {
-  idBird: number;
+  idBird: string;
   image?: string;
   namePtbr: string;
   nameEnglish: string;
