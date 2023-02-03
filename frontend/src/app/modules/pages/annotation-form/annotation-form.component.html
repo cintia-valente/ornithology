@@ -1,10 +1,11 @@
-<section class="annotation">
+<app-nav-bar></app-nav-bar>
+<div class="annotation">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-xl-8">
         <div class="section-title">Anotações</div>
-        <form [formGroup]="annotationForm" class="form-annotation">
-          <div class="form-row">
+        <form [formGroup]="annotationForm">
+          <div class="form">
             <div class="form-group col-md-8">
               <label for="inputBird">Ave*: </label>
               <select
@@ -19,7 +20,19 @@
                   {{ bird.namePtbr }}
                 </option>
               </select>
-              <!-- <label for="inputNome">Data*:</label>
+            </div>
+            <div class="form-group col-md-4">
+              <div class="form-control col-md-3">
+                <label for="inputData">Data:</label>
+                <input
+                  type="datetime-local"
+                  class="form-control"
+                  formControlName="date"
+                  id="data"
+                />
+              </div>
+            </div>
+            <!-- <label for="inputNome">Data*:</label>
               <input
                 type="text"
                 class="form-text"
@@ -30,39 +43,34 @@
                   invalid: annotationForm.controls.place.invalid
                 }"
               /> -->
-              <label for="inputNome">Local*:</label>
-              <input
-                type="text"
-                class="form-text"
-                formControlName="place"
-                id="place"
-                placeholder="Local"
-                [ngClass]="{
-                  invalid: annotationForm.controls.place.invalid
-                }"
-              />
-              <div
-                class="invalid-field"
-                *ngIf="
-                  annotationForm.controls.place.invalid &&
-                  annotationForm.controls.place.touched
-                "
-              >
-                Campo obrigatório. Por favor, informe um local.
-              </div>
+            <label for="inputNome">Local*:</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="place"
+              id="place"
+              placeholder="Local"
+              [ngClass]="{
+                invalid: annotationForm.controls.place.invalid
+              }"
+            />
+            <div
+              class="invalid-field"
+              *ngIf="
+                annotationForm.controls.place.invalid &&
+                annotationForm.controls.place.touched
+              "
+            >
+              Campo obrigatório. Por favor, informe um local.
             </div>
-            <div class="register">
-              <button
-                type="submit"
-                class="btn btn-primary"
-                (click)="onSubmit()"
-              >
-                {{ isEdit ? "Alterar" : "Salvar" }}
-              </button>
-            </div>
+          </div>
+          <div class="register">
+            <button type="submit" class="btn btn-primary" (click)="onSubmit()">
+              {{ isEdit ? "Alterar" : "Salvar" }}
+            </button>
           </div>
         </form>
       </div>
     </div>
   </div>
-</section>
+</div>

@@ -1,0 +1,48 @@
+<link
+  rel="stylesheet"
+  href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+/>
+
+<nav class="navbar navbar-dark bg-danger navbar-expand-lg">
+  <!-- <div class="container"> -->
+  <a class="navbar-brand" href="#">
+    Home
+    <!-- <img src="assets/img/logo.png" style="width: 110px" /> -->
+  </a>
+  <button
+    class="navbar-toggler"
+    (click)="show = !show"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div
+    class="collapse navbar-collapse"
+    [ngClass]="{ show: show }"
+    id="navbarSupportedContent"
+  >
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Cadastrar</a>
+      </li>
+      <li class="navbar-item active">
+        <a class="nav-link" href="#">Visualizar</a>
+      </li>
+      <li class="navbar-item active">
+        <a class="nav-link" href="#">Editar</a>
+      </li>
+    </ul>
+
+    <!-- <a class="nav-item nav-link" [routerLink]="['../cadastrar-paciente']"
+            >Cadastrar Paciente</a
+          >
+          <a class="nav-item nav-link" [routerLink]="['../listar-pacientes']"
+            >Visualizar Pacientes</a
+          > -->
+  </div>
+</nav>

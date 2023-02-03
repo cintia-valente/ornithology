@@ -25,6 +25,7 @@ export class AnnotationFormComponent implements OnInit {
   isEdit: boolean = false;
   formData: any;
   currentBird: any = {};
+  dateFormat: any;
   birdData: Array<{
     id: string;
     image?: string;
@@ -132,6 +133,11 @@ export class AnnotationFormComponent implements OnInit {
 
   public loadForm(annotation: Annotation) {
     //debugger;
+
+    // console.log(this.dateFormat);
+
+    // console.log(this.annotationForm);
+
     this.annotationForm.patchValue({
       idAnnotation: annotation.idAnnotation,
       bird: annotation.bird,

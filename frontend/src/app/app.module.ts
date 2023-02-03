@@ -13,6 +13,7 @@ import { AnnotationListComponent } from './modules/pages/annotation-list/annotat
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UserListComponent } from './modules/pages/user-list/user-list.component';
 import { UserFormComponent } from './modules/pages/user-form/user-form.component';
+import { NavBarComponent } from './modules/components/nav-bar/nav-bar.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { UserFormComponent } from './modules/pages/user-form/user-form.component
     AnnotationListComponent,
     UserListComponent,
     UserFormComponent,
+    NavBarComponent,
   ],
   imports: [
     BrowserModule,
