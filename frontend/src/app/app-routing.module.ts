@@ -9,8 +9,8 @@ import { UserListComponent } from './modules/pages/user-list/user-list.component
 import { UserFormComponent } from './modules/pages/user-form/user-form.component';
 
 const routes: Routes = [
-  { path: '', component: LoginComponent },
-  { path: 'listar-aves', component: BirdComponent },
+  { path: '', component: BirdComponent },
+  { path: 'login', component: LoginComponent },
   { path: 'listar-anotacoes', component: AnnotationListComponent },
   { path: 'cadastrar-anotacoes', component: AnnotationFormComponent },
   { path: 'editar-anotacoes/:id', component: AnnotationFormComponent },

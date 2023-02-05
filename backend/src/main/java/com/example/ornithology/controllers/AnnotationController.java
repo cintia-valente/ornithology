@@ -45,10 +45,11 @@ public class AnnotationController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AnnotationModel> updateAnnotation(@PathVariable(value = "id") Long id,
-                                                @RequestBody AnnotationDto annotationDto) {
-        return ResponseEntity.ok().body(annotationService.update(id, annotationDto));
+    public ResponseEntity<AnnotationModel> updateAnnotation(@PathVariable(value = "id") Long id, @RequestBody AnnotationDto annotationDto) {
+        AnnotationModel updatedAnnotation = annotationService.update(id, annotationDto);
+        return ResponseEntity.ok(updatedAnnotation);
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteAnnotation(@PathVariable(value = "id") Long id) {

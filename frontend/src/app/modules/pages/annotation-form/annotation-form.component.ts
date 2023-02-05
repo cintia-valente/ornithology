@@ -1,5 +1,5 @@
 import { BirdService } from './../../../services/bird.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
@@ -15,29 +15,11 @@ import { Bird } from 'src/app/model/bird.model';
 })
 export class AnnotationFormComponent implements OnInit {
   annotationForm: FormGroup;
+  birds: Bird[] = [];
   submmited: boolean = false;
   error: boolean = false;
   loading: boolean = false;
-  annotationFormData: any;
-  annotations: Annotation[] = [];
-  annotation: Annotation[] = [];
-  birds: Bird[] = [];
   isEdit: boolean = false;
-  formData: any;
-  currentBird: any = {};
-  dateFormat: any;
-  birdData: Array<{
-    id: string;
-    image?: string;
-    namePtbr: string;
-    nameEnglish: string;
-    nameLatin: string;
-    size: string;
-    genre: string;
-    color: string;
-    family: string;
-    habitat: string;
-  }> = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -47,7 +29,18 @@ export class AnnotationFormComponent implements OnInit {
   ) {
     this.annotationForm = this.formBuilder.group({
       idAnnotation: [''],
-      bird: [],
+      bird: this.formBuilder.group({
+        id: [''],
+        image: [null],
+        namePtbr: [''],
+        nameEnglish: [''],
+        nameLatin: [''],
+        size: [''],
+        genre: [''],
+        color: [''],
+        family: [''],
+        habitat: [''],
+      }),
       date: [''],
       place: [
         '',
@@ -61,12 +54,11 @@ export class AnnotationFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.listBirds();
+    this.listBird();
     this.findAnnotationById();
   }
 
   findAnnotationById() {
-    // debugger;
     this.route.paramMap.subscribe((paramMap) => {
       const id = paramMap.get('id');
       if (id === null) {
@@ -110,88 +102,69 @@ export class AnnotationFormComponent implements OnInit {
   }
 
   updateAnnotations() {
-    this.annotationService
-      .putAnnotation(
-        this.annotationForm.value.idAnnotation,
-        this.annotationForm.value
-      )
-      .subscribe({
-        next: () => {
-          this.loading = false;
+    this.annotationService.putAnnotation(this.annotationForm.value).subscribe({
+      next: () => {
+        this.loading = false;
 
-          if (this.annotationForm.value.idAnnotation) {
-            alert('Atualizado com sucesso');
-          }
-        },
-        error: (err: HttpErrorResponse) => {
-          this.error = true;
+        if (this.annotationForm.value.idAnnotation) {
+          alert('Atualizado com sucesso');
+        }
+      },
+      error: (err: HttpErrorResponse) => {
+        this.error = true;
 
-          return throwError(() => err);
-        },
-      });
-  }
-
-  public loadForm(annotation: Annotation) {
-    //debugger;
-
-    // console.log(this.dateFormat);
-
-    // console.log(this.annotationForm);
-
-    this.annotationForm.patchValue({
-      idAnnotation: annotation.idAnnotation,
-      bird: annotation.bird,
-      date: annotation.date,
-      place: annotation.place,
-    });
-
-    this.currentBird = this.annotationForm.value.bird.id;
-
-    //   this.annotationForm.get('bird').setValue(this.currentBird);
-
-    // annotation.bird.forEach((indicator) =>
-    //this.setIndicatorTrue(indicator)
-
-    // this.currentBird = this.annotationForm.value.bird.id;
-
-    // console.log(this.birds);
-
-    // this.currentBird = this.annotationForm.value.bird.id;
-    //this.annotationForm.value.idAnnotation.bird.id.setValue(this.currentBird);
-  }
-
-  // setIndicatorTrue(indicatorParam: Bird) {
-  //   const id = this.annotations.findIndex(
-  //     (indicator) => indicator == indicatorParam.id
-  //   );
-
-  //this.getIndicatorsForm.at(id).setValue(true);
-
-  listBirds() {
-    //debugger;
-    const birdData = [];
-    this.error = false;
-
-    this.birdService.getBirds().subscribe({
-      next: (data) => {
-        this.birds = data;
-        data.forEach((value, index) => {
-          birdData.push(this.birds[index]);
-        });
+        return throwError(() => err);
       },
     });
   }
-  // error: (err: HttpErrorResponse) => {
-  //   this.error = true;
 
-  //   return throwError(() => err);
-  // },
+  public loadForm(annotation: Annotation) {
+    this.annotationForm.patchValue({
+      idAnnotation: annotation.idAnnotation,
+      bird: {
+        id: annotation.bird.id,
+        image: annotation.bird.image,
+        namePtbr: annotation.bird.namePtbr,
+        nameEnglish: annotation.bird.nameEnglish,
+        nameLatin: annotation.bird.nameLatin,
+        size: annotation.bird.size,
+        genre: annotation.bird.genre,
+        color: annotation.bird.color,
+        family: annotation.bird.family,
+        habitat: annotation.bird.habitat,
+      },
+      date: annotation.date,
+      place: annotation.place,
+    });
+  }
 
-  //  console.log(this.setIndicatorTrue(this.));
+  listBird() {
+    this.error = false;
+    this.birdService.getBirds().subscribe({
+      next: (data) => (this.birds = data),
 
-  onChangeBirds(option: any) {
-    //debugger;
-    this.annotationForm.value.bird.id.setValue(option);
-    this.currentBird = option;
+      error: (err: HttpErrorResponse) => {
+        this.error = true;
+        alert(`Erro ao carregar aves. Tente novamente mais tarde.`);
+
+        return throwError(() => err);
+      },
+    });
+  }
+
+  onChangeBird(event: Event) {
+    this.listBird();
+
+    const selectedBird = this.birds.find(
+      (bird) => bird.namePtbr === (event.target as HTMLInputElement).value
+    );
+    if (selectedBird) {
+      this.annotationForm.patchValue({
+        bird: {
+          id: selectedBird.id,
+          namePtbr: selectedBird.namePtbr,
+        },
+      });
+    }
   }
 }

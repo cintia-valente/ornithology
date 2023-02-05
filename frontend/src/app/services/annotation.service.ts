@@ -36,22 +36,9 @@ export class AnnotationService {
     return this.http.post<Annotation>(this.API, annotation);
   }
 
-  // putAnnotation(
-  //   idAnnotation: string,
-  //   annotation: Annotation
-  // ): Observable<Annotation> {
-  //   console.log(annotation);
-
-  //   return this.http.put<Annotation>(`${this.API}/${idAnnotation}`, annotation);
-  // }
-
-  putAnnotation(
-    idAnnotation: any,
-    annotation: Annotation
-  ): Observable<Annotation> {
+  putAnnotation(annotation: Annotation): Observable<Annotation> {
     const body = {
       bird: {
-        idBird: annotation.bird.idBird,
         namePtbr: annotation.bird.namePtbr,
         nameEnglish: annotation.bird.nameEnglish,
         nameLatin: annotation.bird.nameLatin,
@@ -65,8 +52,10 @@ export class AnnotationService {
       place: annotation.place,
     };
 
-    this.birdService.postBirds(body.bird);
-    return this.http.put<Annotation>(`${this.API}/${idAnnotation}`, body);
+    return this.http.put<Annotation>(
+      `${this.API}/${annotation.idAnnotation}`,
+      body
+    );
   }
 
   deleteAnnotations(idAnnotation: string): Observable<Annotation> {

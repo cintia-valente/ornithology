@@ -1,28 +1,57 @@
+<app-nav-bar></app-nav-bar>
+<app-annotation-form [birds]="birds"></app-annotation-form>
 <div class="birds">
-  <div *ngFor="let bird of birds">
-    <div class="bird-namePtbr">
-      {{ bird.namePtbr }}
+  <div class="container">
+    <div class="section-title">Aves</div>
+    <div class="search-container">
+      <form>
+        <div class="form-group">
+          <!-- <span class="input-group-icon"
+            ><img src="assets/svg/layout/search-heart.svg"
+          /></span> -->
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Buscar"
+            (input)="search($event)"
+          />
+        </div>
+      </form>
     </div>
-    <div class="bird-nameEnglish">
-      {{ bird.nameEnglish }}
-    </div>
-    <div class="bird-nameLatin">
-      {{ bird.namePtbr }}
-    </div>
-    <div class="bird-size">
-      {{ bird.size }}
-    </div>
-    <div class="bird-genre">
-      {{ bird.genre }}
-    </div>
-    <div class="bird-color">
-      {{ bird.color }}
-    </div>
-    <div class="bird-family">
-      {{ bird.family }}
-    </div>
-    <div class="bird-habitat">
-      {{ bird.habitat }}
+    <div class="row">
+      <div class="col-md-3" *ngFor="let bird of birds">
+        <a class="nav-item nav-link" [routerLink]="['../cadastrar-anotacoes']">
+          <div class="card">
+            <img src="assets/img/logo.jpg" alt="" />
+            <div class="card-body">
+              <div class="bird-namePtbr">
+                {{ bird.namePtbr }}
+              </div>
+              <div class="bird-nameEnglish">
+                {{ bird.nameEnglish }}
+              </div>
+              <div class="bird-nameLatin">
+                {{ bird.namePtbr }}
+              </div>
+              <div class="bird-size">
+                {{ bird.size }}
+              </div>
+              <div class="bird-genre">
+                {{ bird.genre }}
+              </div>
+              <div class="bird-color">
+                {{ bird.color }}
+              </div>
+              <div class="bird-family">
+                {{ bird.family }}
+              </div>
+              <div class="bird-habitat">
+                {{ bird.habitat }}
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
     </div>
   </div>
 </div>

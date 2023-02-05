@@ -1,9 +1,13 @@
-.section-title {
-    font-size: 25px;
-    margin-bottom: 35px;
-    margin-top: 20px;
-    font-style: italic;
-    font-weight: 50px;
-    color: rgb(69, 78, 88);
-
+.annotation {
+    text-align: center;
+    background-image: url('/assets/img/fundo.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    bottom: 0;
+    left: 0;
+    overflow: auto;
+    position: relative;
+    right: 0;
+    text-align: center;
+    top: 0;
 }

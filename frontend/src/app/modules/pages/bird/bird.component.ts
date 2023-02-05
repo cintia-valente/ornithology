@@ -1,9 +1,10 @@
 import { User } from 'src/app/model/user.model';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { throwError } from 'rxjs';
 import { Bird } from 'src/app/model/bird.model';
 import { BirdService } from '../../../services/bird.service';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-bird',
@@ -11,8 +12,11 @@ import { BirdService } from '../../../services/bird.service';
   styleUrls: ['./bird.component.scss'],
 })
 export class BirdComponent implements OnInit {
-  public birds: Bird[] = [];
+  birds: Bird[] = [];
+  birdsDisplayed: Bird[] = [];
   error: boolean = false;
+  faSearch = faSearch;
+  searchTerm: string = '';
 
   constructor(private birdService: BirdService) {}
 
@@ -24,7 +28,10 @@ export class BirdComponent implements OnInit {
     this.error = false;
 
     this.birdService.getBirds().subscribe({
-      next: (data: Bird[]) => console.log((this.birds = data)),
+      next: (data: Bird[]) => {
+        this.birds = data;
+        this.birdsDisplayed = data;
+      },
 
       error: (err: HttpErrorResponse) => {
         this.error = true;
@@ -34,4 +41,17 @@ export class BirdComponent implements OnInit {
       },
     });
   }
+
+  search(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    const value = target.value;
+
+    this.birds = this.birdsDisplayed.filter((bird) =>
+      bird.namePtbr.toLowerCase().includes(value)
+    );
+  }
+
+  // teste() {
+  //   const currentBird = this.birds;
+  // }
 }
