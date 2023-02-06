@@ -1,46 +1,54 @@
-<section class="user-form">
+<app-nav-bar></app-nav-bar>
+<div class="user-form">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-xl-8">
-        <div class="section-title">Editar Usuário</div>
-        <form [formGroup]="userForm" class="form-user">
-          <div class="form-row">
-            <div class="form-group col-md-8">
-              <label for="inputNome">Nome:</label>
-              <input
-                type="text"
-                class="form-text"
-                formControlName="name"
-                id="name"
-                placeholder="Nome"
-              />
+        <form [formGroup]="userForm">
+          <div class="row">
+            <div class="col-md-12 offset-md-2">
+              <div class="form">
+                <div class="form-area">
+                  <div class="form-group">
+                    <label for="inputNome">Nome:</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="name"
+                      id="name"
+                      placeholder="Nome"
+                    />
+                  </div>
 
-              <label for="inputNome">Email:</label>
-              <input
-                type="text"
-                class="form-text"
-                formControlName="email"
-                id="email"
-                placeholder="nome@email.com"
-              />
-            </div>
+                  <div class="form-group">
+                    <label for="inputNome">Email:</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="email"
+                      id="email"
+                      placeholder="nome@email.com"
+                    />
+                  </div>
 
-            <div class="register">
-              <button
-                *ngIf="!error; else loading"
-                type="submit"
-                class="btn btn-primary"
-                (click)="onSubmit()"
-              >
-                {{ isEdit ? "Alterar" : "Salvar" }}
-              </button>
+                  <div class="button-register-edit">
+                    <button
+                      *ngIf="!error; else loading"
+                      type="submit"
+                      class="btn btn-danger"
+                      (click)="onSubmit()"
+                    >
+                      {{ isEdit ? "Alterar" : "Salvar" }}
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </form>
       </div>
     </div>
   </div>
-</section>
+</div>
 
 <ng-template #loading>
   <div class="error" *ngIf="error">

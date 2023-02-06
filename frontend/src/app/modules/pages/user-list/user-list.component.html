@@ -1,22 +1,52 @@
-<section class="user-list">
-  <div *ngFor="let user of users">
-    <div class="user-name">
-      {{ user.name }}
-    </div>
-    <div class="user-email">
-      {{ user.email }}
-    </div>
-    <div class="user-password">
-      {{ user.password }}
-    </div>
+<app-nav-bar></app-nav-bar>
+<div class="users">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-xl-8">
+        <div class="section-title">Anotações</div>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Email</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
 
-    <div class="delete">
-      <button type="submit" class="btn btn-primary" (click)="deleteUser(user)">
-        Excluir
-      </button>
+          <tbody>
+            <tr *ngFor="let user of users">
+              <td class="py-1">
+                {{ user.name }}
+              </td>
+              <td class="py-1">
+                {{ user.email }}
+              </td>
+
+              <td class="py-1">
+                <div class="table-actions">
+                  <span class="icon-delete">
+                    <img
+                      src="assets/svg/layout/trash-solid.svg"
+                      (click)="deleteUser(user)"
+                    />
+                  </span>
+                  <span class="icon-edit">
+                    <a [routerLink]="['/editar-usuario', user.idUser]">
+                      <img
+                        src="assets/svg/layout/pen-solid.svg"
+                        style="width: 17px"
+                      />
+                    </a>
+                  </span>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
-</section>
+</div>
 
 <!-- <ng-template #loading>
   <div class="error" *ngIf="error">

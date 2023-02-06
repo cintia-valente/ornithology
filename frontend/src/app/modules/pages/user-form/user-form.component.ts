@@ -77,7 +77,7 @@ export class UserFormComponent {
       next: () => {
         this.loading = false;
 
-        alert('Cadastrado com sucesso');
+        alert('Usuário cadastrado com sucesso');
       },
       error: (err: HttpErrorResponse) => {
         this.error = true;
@@ -96,7 +96,7 @@ export class UserFormComponent {
           this.loading = false;
 
           if (this.userForm.value.idUser) {
-            alert('Atualizado com sucesso');
+            alert('Usuário atualizado com sucesso');
           }
         },
         error: (err: HttpErrorResponse) => {

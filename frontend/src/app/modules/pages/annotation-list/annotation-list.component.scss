@@ -1,0 +1,20 @@
+.table {
+    margin-top: 2rem;
+}
+
+.table-actions {
+    text-align: center;
+
+    .icon-delete {
+        margin-left: 0rem;
+        float: left;
+
+        img {
+            width: 17px;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+}

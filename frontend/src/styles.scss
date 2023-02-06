@@ -1,27 +1,83 @@
-.section-title {
-    font-size: 30px;
-    margin-bottom: 35px;
-    margin-top: 20px;
-    font-style: italic;
-    font-weight: 50px;
-    color: rgb(69, 78, 88);
-}
+@import 'node_modules/bootstrap/scss/functions';
+@import 'node_modules/bootstrap/scss/variables';
+@import 'node_modules/bootstrap/scss/mixins';
 
-.form {
-    min-height: 22rem;
+.container {
+    margin-bottom: 2rem;
+    margin-top: 3rem;
 
-    .form-group {
-        margin-bottom: 2.88rem;
-        width: 65%;
-    }
-}
+    .section-title {
+        font-size: 30px;
+        margin-top: 9px;
+        font-style: italic;
+        font-weight: 500px;
+        color: white;
+        margin-bottom: inherit;
+        
 
-.button-register-edit {
-    margin-left: 7rem;
-
-    .btn {
-        padding: 0.45rem 1.25rem;
-        width: 200px;
+        @include media-breakpoint-up(md) {
+            color: white;
+        }
     
+        @include media-breakpoint-up(xl) {
+            color: black;
+        }
+    }
+
+    .search-container {
+        margin: inherit;
+    }
+
+    .form {
+        min-height: 22rem;
+
+        margin-left: 3rem;
+
+        @include media-breakpoint-up(md) {
+            margin-left: 0rem;
+        }
+
+        @include media-breakpoint-up(xl) {
+            margin-left: 0rem;
+        }
+
+        .form-group {
+            width: 65%;
+            margin-bottom: 2rem;
+            
+            label {
+                font-weight: 600;
+                color: white;
+        
+                @include media-breakpoint-up(md) {
+                    color: white;
+                }
+            
+                @include media-breakpoint-up(xl) {
+                    color: black;
+                }
+            }
+        }
+    }
+
+    .button-register-edit {
+        margin-right: 9rem;
+        margin-top: 1rem;
+    
+        @include media-breakpoint-up(md) {
+            display: flex;
+            margin-left: 7rem;
+        }
+    
+        @include media-breakpoint-up(xl) {
+            display: flex;
+            margin-left: 7rem;
+        }
+
+        .btn {
+            padding: 0.45rem 1.25rem;
+            width: 200px;
+
+        }
     }
 }

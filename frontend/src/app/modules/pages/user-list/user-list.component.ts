@@ -42,7 +42,7 @@ export class UserListComponent implements OnInit {
   deleteUser(user: User) {
     this.userService.deleteUser(user.idUser).subscribe({
       next: () => {
-        alert(`Usuário excluído com sucesso. Tente novamente mais tarde.`);
+        alert(`Usuário excluído com sucesso.`);
         this.listUser();
       },
       error: (err: HttpErrorResponse) => {

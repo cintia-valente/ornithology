@@ -1,10 +1,8 @@
-import { User } from 'src/app/model/user.model';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { throwError } from 'rxjs';
 import { Bird } from 'src/app/model/bird.model';
 import { BirdService } from '../../../services/bird.service';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-bird',
@@ -15,16 +13,14 @@ export class BirdComponent implements OnInit {
   birds: Bird[] = [];
   birdsDisplayed: Bird[] = [];
   error: boolean = false;
-  faSearch = faSearch;
-  searchTerm: string = '';
 
   constructor(private birdService: BirdService) {}
 
   ngOnInit(): void {
-    this.listBird();
+    this.listBirds();
   }
 
-  listBird() {
+  listBirds() {
     this.error = false;
 
     this.birdService.getBirds().subscribe({
@@ -50,8 +46,4 @@ export class BirdComponent implements OnInit {
       bird.namePtbr.toLowerCase().includes(value)
     );
   }
-
-  // teste() {
-  //   const currentBird = this.birds;
-  // }
 }

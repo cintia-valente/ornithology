@@ -1,5 +1,4 @@
 import { Bird } from 'src/app/model/bird.model';
-import { BirdService } from './../../../services/bird.service';
 import { AnnotationService } from './../../../services/annotation.service';
 import { Component } from '@angular/core';
 import { Annotation } from 'src/app/model/annotation.model';
@@ -20,8 +19,7 @@ export class AnnotationListComponent {
 
   constructor(
     private formBuilder: FormBuilder,
-    private annotationService: AnnotationService,
-    private birdService: BirdService
+    private annotationService: AnnotationService
   ) {
     this.annotationForm = this.formBuilder.group({
       idAnnotation: [''],
