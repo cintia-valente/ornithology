@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { throwError } from 'rxjs';
 import { Bird } from 'src/app/model/bird.model';
 import { BirdService } from '../../../services/bird.service';
@@ -14,7 +15,10 @@ export class BirdComponent implements OnInit {
   birdsDisplayed: Bird[] = [];
   error: boolean = false;
 
-  constructor(private birdService: BirdService) {}
+  constructor(
+    private birdService: BirdService,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
     this.listBirds();
@@ -30,8 +34,9 @@ export class BirdComponent implements OnInit {
       },
 
       error: (err: HttpErrorResponse) => {
-        this.error = true;
-        alert(`Erro ao carregar aves. Tente novamente mais tarde.`);
+        this.toastr.error(
+          'Erro ao carregar usuários. Por favor, tente novamente mais tarde.'
+        );
 
         return throwError(() => err);
       },

@@ -1,6 +1,8 @@
 @import 'node_modules/bootstrap/scss/functions';
 @import 'node_modules/bootstrap/scss/variables';
 @import 'node_modules/bootstrap/scss/mixins';
+@import "/src/app/scss/variables.scss";
+@import "ngx-toastr/toastr";
 
 .container {
     margin-bottom: 2rem;
@@ -11,16 +13,16 @@
         margin-top: 9px;
         font-style: italic;
         font-weight: 500px;
-        color: white;
+        color: $white;
         margin-bottom: inherit;
         
 
         @include media-breakpoint-up(md) {
-            color: white;
+            color: $white;
         }
     
         @include media-breakpoint-up(xl) {
-            color: black;
+            color: $black;
         }
     }
 
@@ -47,15 +49,21 @@
             
             label {
                 font-weight: 600;
-                color: white;
+                color: $white;
         
                 @include media-breakpoint-up(md) {
-                    color: white;
+                    color: $white;
                 }
             
                 @include media-breakpoint-up(xl) {
-                    color: black;
+                    color: $black;
                 }
+            }
+
+            .invalid-field {
+                color: $red-valid;
+                padding-top: 0.2rem;
+                font-weight: bold;
             }
         }
     }

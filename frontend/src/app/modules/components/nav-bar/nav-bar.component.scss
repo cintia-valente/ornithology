@@ -1,9 +1,10 @@
 @import 'node_modules/bootstrap/scss/functions';
 @import 'node_modules/bootstrap/scss/variables';
 @import 'node_modules/bootstrap/scss/mixins';
+@import "/src/app/scss/variables.scss";
 
 .navbar-custom {
-  background: -webkit-linear-gradient(60deg, chocolate, rgb(233, 98, 98), chocolate);
+  background: -webkit-linear-gradient(60deg, $chocolate, $nav-center, $chocolate);
 
   .navbar-brand {
 

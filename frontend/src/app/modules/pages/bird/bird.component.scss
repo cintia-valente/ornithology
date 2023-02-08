@@ -1,11 +1,11 @@
-$primary-border-color: #acabab;
+@import "/src/app/scss/variables.scss";
 
 .title {
     font-size: 30px;
     margin-top: 9px;
     font-style: italic;
     font-weight: 500px;
-    color: black;
+    color: $black;
     margin-bottom: inherit;
 }
 

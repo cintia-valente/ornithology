@@ -16,9 +16,6 @@
     <div class="search-container">
       <form>
         <div class="form-group">
-          <!-- <span class="input-group-icon"
-            ><img src="assets/svg/layout/search-heart.svg"
-          /></span> -->
           <input
             type="text"
             class="form-control"
@@ -30,13 +27,12 @@
     </div>
     <div class="row">
       <div class="col-md-3" *ngFor="let bird of birds">
-        <!-- <app-annotation [listBird]="listBirdEvent"></app-annotation> -->
         <a
           class="nav-item nav-link"
           [routerLink]="['../cadastrar/', bird.namePtbr]"
         >
           <div class="card">
-            <img src="assets/img/arara.jpg" alt="" />
+            <img src="'url(' + bird.image + ')'" alt="" />
             <div class="card-body">
               <div class="bird-namePtbr">
                 {{ bird.namePtbr }}

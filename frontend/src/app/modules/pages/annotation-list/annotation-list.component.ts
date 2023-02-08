@@ -5,6 +5,7 @@ import { Annotation } from 'src/app/model/annotation.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-annotation-list',
@@ -19,7 +20,8 @@ export class AnnotationListComponent {
 
   constructor(
     private formBuilder: FormBuilder,
-    private annotationService: AnnotationService
+    private annotationService: AnnotationService,
+    private toastr: ToastrService
   ) {
     this.annotationForm = this.formBuilder.group({
       idAnnotation: [''],
@@ -44,11 +46,12 @@ export class AnnotationListComponent {
     this.error = false;
 
     this.annotationService.getAnnotations().subscribe({
-      next: (data: Annotation[]) => console.log((this.annotations = data)),
+      next: (data: Annotation[]) => (this.annotations = data),
 
       error: (err: HttpErrorResponse) => {
-        this.error = true;
-        alert(`Erro ao carregar anotações. Tente novamente mais tarde.`);
+        this.toastr.error(
+          'Erro ao carregar usuários. Por favor, tente novamente mais tarde.'
+        );
 
         return throwError(() => err);
       },
@@ -61,11 +64,12 @@ export class AnnotationListComponent {
       .subscribe({
         next: () => {
           this.listAnnotations();
-          alert('Anotação ecluída com sucesso.');
+          this.toastr.error('Excluída com sucesso.');
         },
         error: (err: HttpErrorResponse) => {
-          this.error = true;
-          alert('Erro ao excluir anotação. Tente novamente mais tarde.');
+          this.toastr.error(
+            'Erro ao excluir anotação. Por favor, tente novamente mais tarde.'
+          );
 
           return throwError(() => err);
         },

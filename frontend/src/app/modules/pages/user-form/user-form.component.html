@@ -14,25 +14,40 @@
                       type="text"
                       class="form-control"
                       formControlName="name"
-                      id="name"
                       placeholder="Nome"
                     />
+                    <div
+                      class="invalid-field"
+                      *ngIf="
+                        userForm.controls.name.invalid &&
+                        userForm.controls.name.touched
+                      "
+                    >
+                      Campo obrigatório. Por favor, informe um nome.
+                    </div>
                   </div>
 
                   <div class="form-group">
                     <label for="inputNome">Email:</label>
                     <input
-                      type="text"
+                      type="email"
                       class="form-control"
                       formControlName="email"
-                      id="email"
                       placeholder="nome@email.com"
                     />
+                    <div
+                      class="invalid-field"
+                      *ngIf="
+                        userForm.controls.email.invalid &&
+                        userForm.controls.email.touched
+                      "
+                    >
+                      Campo obrigatório. Por favor, informe um email válido.
+                    </div>
                   </div>
 
                   <div class="button-register-edit">
                     <button
-                      *ngIf="!error; else loading"
                       type="submit"
                       class="btn btn-danger"
                       (click)="onSubmit()"
@@ -49,9 +64,3 @@
     </div>
   </div>
 </div>
-
-<ng-template #loading>
-  <div class="error" *ngIf="error">
-    Erro ao adicionar usuário. Tente novamente mais tarde.
-  </div>
-</ng-template>

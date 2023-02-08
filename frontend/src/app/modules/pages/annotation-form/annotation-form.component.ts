@@ -1,5 +1,5 @@
 import { BirdService } from './../../../services/bird.service';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
@@ -7,6 +7,7 @@ import { AnnotationService } from '../../../services/annotation.service';
 import { Annotation } from 'src/app/model/annotation.model';
 import { ActivatedRoute } from '@angular/router';
 import { Bird } from 'src/app/model/bird.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-annotation-form',
@@ -20,12 +21,14 @@ export class AnnotationFormComponent implements OnInit {
   error: boolean = false;
   loading: boolean = false;
   isEdit: boolean = false;
+  annotations: any;
 
   constructor(
     private formBuilder: FormBuilder,
     private annotationService: AnnotationService,
     private route: ActivatedRoute,
-    private birdService: BirdService
+    private birdService: BirdService,
+    public toastr: ToastrService
   ) {
     this.annotationForm = this.formBuilder.group({
       idAnnotation: [''],
@@ -45,7 +48,7 @@ export class AnnotationFormComponent implements OnInit {
       place: [
         '',
         [
-          Validators.minLength(3),
+          Validators.minLength(2),
           Validators.maxLength(100),
           Validators.required,
         ],
@@ -88,13 +91,17 @@ export class AnnotationFormComponent implements OnInit {
     this.annotationService
       .postAnnotations(this.annotationForm.value)
       .subscribe({
-        next: () => {
+        next: (data) => {
           this.loading = false;
 
-          alert('Cadastrado com sucesso');
+          if (data) {
+            this.toastr.success('Cadastrado com sucesso');
+          }
         },
         error: (err: HttpErrorResponse) => {
-          this.error = true;
+          this.toastr.error(
+            'Erro ao cadastrar os dados. Por favor, tente novamente mais tarde.'
+          );
 
           return throwError(() => err);
         },
@@ -107,11 +114,13 @@ export class AnnotationFormComponent implements OnInit {
         this.loading = false;
 
         if (this.annotationForm.value.idAnnotation) {
-          alert('Atualizado com sucesso');
+          this.toastr.success('Atualizado com sucesso');
         }
       },
       error: (err: HttpErrorResponse) => {
-        this.error = true;
+        this.toastr.error(
+          'Erro ao atualizar os dados. Por favor, tente novamente mais tarde.'
+        );
 
         return throwError(() => err);
       },
@@ -144,8 +153,9 @@ export class AnnotationFormComponent implements OnInit {
       next: (data) => (this.birds = data),
 
       error: (err: HttpErrorResponse) => {
-        this.error = true;
-        alert(`Erro ao carregar aves. Tente novamente mais tarde.`);
+        this.toastr.error(
+          'Erro ao carregar usuários. Por favor, tente novamente mais tarde.'
+        );
 
         return throwError(() => err);
       },

@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AnnotationFormComponent } from './modules/pages/annotation-form/annotation-form.component';
 import { BirdComponent } from './modules/pages/bird/bird.component';
-import { LoginComponent } from './modules/pages/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
@@ -20,7 +19,6 @@ import { NavBarComponent } from './modules/components/nav-bar/nav-bar.component'
     AppComponent,
     AnnotationFormComponent,
     BirdComponent,
-    LoginComponent,
     AnnotationListComponent,
     UserListComponent,
     UserFormComponent,

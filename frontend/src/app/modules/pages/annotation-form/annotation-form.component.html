@@ -11,11 +11,8 @@
                 <div class="form-area">
                   <div class="form-group">
                     <label for="inputBird">Ave*: </label>
-                    <select
-                      class="form-control"
-                      (change)="onChangeBird($event)"
-                    >
-                      <option value="" selected>Selecione....</option>
+                    <select class="form-control" (click)="onChangeBird($event)">
+                      <option value="" selected>Selecione...</option>
                       <option
                         *ngFor="let bird of birds"
                         [value]="bird.namePtbr"
@@ -34,32 +31,17 @@
                       type="datetime-local"
                       class="form-control"
                       formControlName="date"
-                      id="data"
+                      required
                     />
                   </div>
 
-                  <!-- <label for="inputNome">Data*:</label>
-              <input
-                type="text"
-                class="form-text"
-                formControlName="date"
-                id="date"
-                placeholder="Data"
-                [ngClass]="{
-                  invalid: annotationForm.controls.place.invalid
-                }"
-              /> -->
                   <div class="form-group">
                     <label for="inputNome">Local*:</label>
                     <input
                       type="text"
                       class="form-control"
                       formControlName="place"
-                      id="place"
                       placeholder="Local"
-                      [ngClass]="{
-                        invalid: annotationForm.controls.place.invalid
-                      }"
                     />
                     <div
                       class="invalid-field"
