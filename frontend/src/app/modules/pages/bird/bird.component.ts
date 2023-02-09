@@ -35,7 +35,7 @@ export class BirdComponent implements OnInit {
 
       error: (err: HttpErrorResponse) => {
         this.toastr.error(
-          'Erro ao carregar usuários. Por favor, tente novamente mais tarde.'
+          'Erro ao carregar aves. Por favor, tente novamente mais tarde.'
         );
 
         return throwError(() => err);

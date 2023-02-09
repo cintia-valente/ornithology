@@ -1,0 +1,94 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserListComponent Dado: que o componente foi carregado
+      Quando: detectar as alterações
+      Então: deve gerar um Snapshot do componente carregado 1`] = `
+<app-user-list
+  __ngContext__={[Function Number]}
+  error="false"
+  submmited="false"
+  toastr={[Function ToastrServiceMock]}
+  userService={[Function UserServiceMock]}
+  users={[Function Array]}
+>
+  <app-nav-bar /><div
+    class="users"
+  >
+    <div
+      class="container"
+    >
+      <div
+        class="row justify-content-center"
+      >
+        <div
+          class="col-xl-8"
+        >
+          <div
+            class="section-title"
+          >
+            Usuários
+          </div>
+          <table
+            class="table table-striped"
+          >
+            <thead>
+              <tr>
+                <th>
+                  Nome
+                </th>
+                <th>
+                  Email
+                </th>
+                <th>
+                  Ações
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td
+                  class="py-1"
+                >
+                   Maite 
+                </td>
+                <td
+                  class="py-1"
+                >
+                   maite@email.com 
+                </td>
+                <td
+                  class="py-1"
+                >
+                  <div
+                    class="table-actions"
+                  >
+                    <span
+                      class="icon-delete"
+                    >
+                      <img
+                        src="assets/svg/layout/trash-solid.svg"
+                      />
+                    </span>
+                    <span
+                      class="icon-edit"
+                    >
+                      <a
+                        href="/editar-usuario/135"
+                      >
+                        <img
+                          src="assets/svg/layout/pen-solid.svg"
+                          style="width: 17px;"
+                        />
+                      </a>
+                    </span>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</app-user-list>
+`;

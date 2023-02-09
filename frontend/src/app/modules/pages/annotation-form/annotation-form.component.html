@@ -58,6 +58,7 @@
                       type="submit"
                       class="btn btn-danger"
                       (click)="onSubmit()"
+                      [disabled]="!annotationForm.valid"
                     >
                       {{ isEdit ? "Alterar" : "Salvar" }}
                     </button>

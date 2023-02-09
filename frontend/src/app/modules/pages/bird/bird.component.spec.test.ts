@@ -1,19 +1,21 @@
-import { BirdService } from '../../../services/bird.service';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import {
   ComponentFixture,
   getTestBed,
   TestBed,
   TestComponentRenderer,
 } from '@angular/core/testing';
-import { of } from 'rxjs';
-
-import { BirdComponent } from './bird.component';
-import { ToastrService } from 'ngx-toastr';
-import { CommonModule, Location } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Routes } from '@angular/router';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+
+import { ToastrService } from 'ngx-toastr';
+import { of } from 'rxjs';
+
+import { BirdService } from '../../../services/bird.service';
+
+import { BirdComponent } from './bird.component';
 
 const mockBirds = [
   {
@@ -53,7 +55,6 @@ describe('BirdComponent', () => {
   let injector: TestBed;
   let component: BirdComponent;
   let fixture: ComponentFixture<BirdComponent>;
-  let location: Location;
   let birdService: BirdService;
   let toastrService: ToastrService;
 
@@ -77,7 +78,6 @@ describe('BirdComponent', () => {
   beforeEach(() => {
     injector = getTestBed();
     fixture = TestBed.createComponent(BirdComponent);
-    location = injector.inject(Location);
 
     birdService = injector.inject(BirdService);
     toastrService = injector.inject(ToastrService);
@@ -95,7 +95,7 @@ describe('BirdComponent', () => {
   it(`Dado: que o componente foi carregado
       Então: deve chamar o serviço birdService.getBirds`, async () => {
     //Arrange
-    const spyUser = jest
+    const spyUserList = jest
       .spyOn(birdService, 'getBirds')
       .mockReturnValue(of(mockBirds));
 
@@ -103,7 +103,7 @@ describe('BirdComponent', () => {
     fixture.detectChanges();
 
     //Assert
-    expect(spyUser).toHaveBeenCalled();
+    expect(spyUserList).toHaveBeenCalled();
   });
 
   it(`Dado: que o componente foi carregado

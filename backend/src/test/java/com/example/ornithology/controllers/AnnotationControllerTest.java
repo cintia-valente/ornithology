@@ -1,12 +1,9 @@
 package com.example.ornithology.controllers;
 
-import com.example.ornithology.controllers.AnnotationController;
 import com.example.ornithology.dto.AnnotationDto;
 import com.example.ornithology.dto.BirdDto;
-import com.example.ornithology.dto.UserDto;
 import com.example.ornithology.models.AnnotationModel;
 import com.example.ornithology.models.BirdModel;
-import com.example.ornithology.models.UserModel;
 import com.example.ornithology.services.AnnotationService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -96,22 +93,22 @@ public class AnnotationControllerTest {
 
     @Test
     void getAllAnnotation() {
-//        annotationDto = new AnnotationDto(
-//                new BirdModel(
-//                        null,
-//                        null,
-//                        "Canário",
-//                        "Blue-and-yellow Macaw",
-//                        "Ara ararauna",
-//                        "90 cm",
-//                        "Can",
-//                        "Amarelo",
-//                        "Psittacidae",
-//                        "Floresta"
-//                ),
-//                null,
-//                "Amazonas"
-//        );
+        annotationDto = new AnnotationDto(
+                new BirdModel(
+                        null,
+                        null,
+                        "Canário",
+                        "Blue-and-yellow Macaw",
+                        "Ara ararauna",
+                        "90 cm",
+                        "Can",
+                        "Amarelo",
+                        "Psittacidae",
+                        "Floresta"
+                ),
+                null,
+                "Amazonas"
+        );
 
 
         var response = assertDoesNotThrow(() -> annotationController.getAllAnnotation());

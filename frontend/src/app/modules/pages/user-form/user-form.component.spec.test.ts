@@ -1,5 +1,4 @@
-import { UserService } from '../../../services/user.service';
-import { CommonModule, Location } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import {
   ComponentFixture,
@@ -8,14 +7,16 @@ import {
   TestComponentRenderer,
 } from '@angular/core/testing';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
-import { of } from 'rxjs';
-
-import { UserFormComponent } from './user-form.component';
-import { ToastrService } from 'ngx-toastr';
 import { Routes } from '@angular/router';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+
+import { ToastrService } from 'ngx-toastr';
+import { of, throwError } from 'rxjs';
+
+import { UserService } from '../../../services/user.service';
+
+import { UserFormComponent } from './user-form.component';
 
 const mockUser = {
   idUser: '135',
@@ -55,7 +56,6 @@ describe('UserFormComponent', () => {
   let injector: TestBed;
   let component: UserFormComponent;
   let fixture: ComponentFixture<UserFormComponent>;
-  let location: Location;
   let userService: UserService;
   let toastrService: ToastrService;
 
@@ -63,7 +63,6 @@ describe('UserFormComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         CommonModule,
-        BrowserModule,
         HttpClientModule,
         RouterTestingModule,
         FormsModule,
@@ -87,7 +86,6 @@ describe('UserFormComponent', () => {
   beforeEach(() => {
     injector = getTestBed();
     fixture = TestBed.createComponent(UserFormComponent);
-    location = injector.inject(Location);
 
     userService = injector.inject(UserService);
     toastrService = injector.inject(ToastrService);
@@ -107,11 +105,11 @@ describe('UserFormComponent', () => {
       E: clicar no botão salvar
       Então: deve chamar os serviços userService.postAnnotations e toastrService.success`, async () => {
     //Arrange;
-    const spyUser = jest
+    const spyUserPost = jest
       .spyOn(userService, 'postUsers')
       .mockReturnValue(of(mockUser));
 
-    const spySuccess = jest
+    const spySuccessPost = jest
       .spyOn(toastrService, 'success')
       .mockReturnValue({} as any);
 
@@ -145,30 +143,25 @@ describe('UserFormComponent', () => {
     button.click();
 
     //Assert
-    expect(spyUser).toHaveBeenCalled();
-    expect(spySuccess).toHaveBeenCalled();
+    expect(spyUserPost).toHaveBeenCalled();
+    expect(spySuccessPost).toHaveBeenCalled();
   });
 
   it(`Dado: que o componente foi carregado
-      Quando: preencher o formulário
+      Quando: atribuir um erro no serviço
+      E: preencher o formulário
       E: clicar no botão salvar
-      Então: deve chamar os serviços userService.putUser e toastrService.success`, async () => {
-    //Arrange
-    // component.submmited = true;
-    component.userForm.value.idUser = mockUser.idUser;
-    component.isEdit = true;
+      Então: deve chamar os serviços userService.postAnnotations`, async () => {
+    //Arrange;
+    const error = {
+      error: 'error',
+      status: 400,
+      message: 'Server Error',
+    };
 
-    const spyUserGetById = jest
-      .spyOn(userService, 'getUserById')
-      .mockReturnValue(of(mockUser));
-
-    const spyUserPut = jest
-      .spyOn(userService, 'putUser')
-      .mockReturnValue(of(mockUser));
-
-    const spySuccess = jest
-      .spyOn(toastrService, 'success')
-      .mockReturnValue({} as any);
+    const spyUserPostError = jest
+      .spyOn(userService, 'postUsers')
+      .mockReturnValue(throwError(() => error.message));
 
     fixture.detectChanges();
     await fixture.whenStable();
@@ -177,13 +170,21 @@ describe('UserFormComponent', () => {
       '.user-form form div:nth-child(1) input'
     );
 
-    nameInput.value = 'teste atualizado';
+    nameInput.value = 'teste';
 
     nameInput.dispatchEvent(new Event('input'));
 
-    //Act
+    //Act;
     fixture.detectChanges();
     await fixture.whenStable();
+
+    const emailInput = fixture.nativeElement.querySelector(
+      '.user-form form div:nth-child(2) input'
+    );
+
+    emailInput.value = 'teste@email.com';
+
+    emailInput.dispatchEvent(new Event('input'));
 
     const button = fixture.nativeElement.querySelector(
       '.user-form form div.button-register-edit button'
@@ -192,8 +193,6 @@ describe('UserFormComponent', () => {
     button.click();
 
     //Assert
-    expect(spyUserGetById).toHaveBeenCalled();
-    expect(spyUserPut).toHaveBeenCalled();
-    // expect(spySuccess).toHaveBeenCalled();
+    expect(spyUserPostError).toHaveBeenCalled();
   });
 });

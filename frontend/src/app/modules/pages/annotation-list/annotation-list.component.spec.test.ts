@@ -1,20 +1,21 @@
-import { AnnotationService } from '../../../services/annotation.service';
-import { Location } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import {
   ComponentFixture,
   getTestBed,
   TestBed,
   TestComponentRenderer,
 } from '@angular/core/testing';
-
-import { AnnotationListComponent } from './annotation-list.component';
-import { HttpClientModule } from '@angular/common/http';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Routes } from '@angular/router';
-import { of } from 'rxjs';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+
 import { ToastrService } from 'ngx-toastr';
+import { of, throwError } from 'rxjs';
+
+import { AnnotationService } from '../../../services/annotation.service';
+
+import { AnnotationListComponent } from './annotation-list.component';
 
 const mockAnnotations = [
   {
@@ -63,14 +64,12 @@ describe('AnnotationListComponent', () => {
   let injector: TestBed;
   let component: AnnotationListComponent;
   let fixture: ComponentFixture<AnnotationListComponent>;
-  let location: Location;
   let annotationService: AnnotationService;
   let toastrService: ToastrService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        // BrowserModule,
         HttpClientModule,
         RouterTestingModule,
         FormsModule,
@@ -94,7 +93,6 @@ describe('AnnotationListComponent', () => {
   beforeEach(() => {
     injector = getTestBed();
     fixture = TestBed.createComponent(AnnotationListComponent);
-    location = injector.inject(Location);
 
     annotationService = injector.inject(AnnotationService);
     toastrService = injector.inject(ToastrService);
@@ -114,7 +112,7 @@ describe('AnnotationListComponent', () => {
   it(`Dado: que o componente foi carregado
       Então: deve chamar o serviço userService.getUsers`, async () => {
     //Arrange
-    const spyUser = jest
+    const spyAnnotationList = jest
       .spyOn(annotationService, 'getAnnotations')
       .mockReturnValue(of(mockAnnotations));
 
@@ -122,7 +120,28 @@ describe('AnnotationListComponent', () => {
     fixture.detectChanges();
 
     //Assert
-    expect(spyUser).toHaveBeenCalled();
+    expect(spyAnnotationList).toHaveBeenCalled();
+  });
+
+  it(`Dado: que o componente foi carregado
+      Quando: ocorrer um erro ao carregar as anotações 
+      Então: deve chamar o serviço userService.getUsers`, async () => {
+    //Arrange
+    const error = {
+      error: 'error',
+      status: 400,
+      message: 'Server Error',
+    };
+
+    const spyAnnotationListError = jest
+      .spyOn(annotationService, 'getAnnotations')
+      .mockReturnValue(throwError(() => error.message));
+
+    //Act
+    fixture.detectChanges();
+
+    //Assert
+    expect(spyAnnotationListError).toHaveBeenCalled();
   });
 
   it(`Dado: que o componente foi carregado
@@ -147,7 +166,7 @@ describe('AnnotationListComponent', () => {
       place: 'Porto Alegre',
     };
 
-    const spyUser = jest
+    const spyUserDelete = jest
       .spyOn(annotationService, 'deleteAnnotations')
       .mockReturnValue(of(mockAnnotations));
 
@@ -164,7 +183,37 @@ describe('AnnotationListComponent', () => {
     await fixture.whenStable();
 
     //Assert
-    expect(spyUser).toHaveBeenCalled();
+    expect(spyUserDelete).toHaveBeenCalled();
+  });
+
+  it(`Dado: que o componente foi carregado
+      Quando: atribuir um erro no serviço 
+      Então: deve chamar o serviço userService.deleteUser`, async () => {
+    //Arrange
+    const error = {
+      error: 'error',
+      status: 400,
+      message: 'Server Error',
+    };
+
+    const spyAnnotationDeleteError = jest
+      .spyOn(annotationService, 'deleteAnnotations')
+      .mockReturnValue(throwError(() => error.message));
+
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const annotationDelete = fixture.nativeElement.querySelector(
+      '.annotations table > tbody > tr:nth-child(1) > td:nth-child(4) > div > span.icon-delete > img'
+    );
+
+    annotationDelete.click();
+
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    //Assert
+    expect(spyAnnotationDeleteError).toHaveBeenCalled();
   });
 
   it(`Dado: que o componente foi carregado

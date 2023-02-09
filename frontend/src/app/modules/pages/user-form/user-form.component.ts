@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-user-form',
@@ -25,19 +26,20 @@ export class UserFormComponent {
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public toastr: ToastrService
   ) {
     this.userForm = this.formBuilder.group({
       idUser: [''],
       name: [
         '',
         [
-          Validators.minLength(4),
+          Validators.minLength(3),
           Validators.maxLength(100),
           Validators.required,
         ],
       ],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.email]],
       password: ['', [Validators.minLength(4), Validators.maxLength(4)]],
     });
   }
@@ -74,14 +76,17 @@ export class UserFormComponent {
   addUsers() {
     this.error = false;
     this.userService.postUsers(this.userForm.value).subscribe({
-      next: () => {
+      next: (data) => {
         this.loading = false;
 
-        alert('Usuário cadastrado com sucesso');
+        if (data) {
+          this.toastr.success('Cadastrado com sucesso');
+        }
       },
       error: (err: HttpErrorResponse) => {
-        this.error = true;
-        alert(`Erro ao cadastrar anotação. Tente novamente mais tarde.`);
+        this.toastr.error(
+          'Erro ao cadastrar os dados. Por favor, tente novamente mais tarde.'
+        );
 
         return throwError(() => err);
       },
@@ -96,11 +101,13 @@ export class UserFormComponent {
           this.loading = false;
 
           if (this.userForm.value.idUser) {
-            alert('Usuário atualizado com sucesso');
+            this.toastr.success('Atualizado com sucesso');
           }
         },
         error: (err: HttpErrorResponse) => {
-          this.error = true;
+          this.toastr.error(
+            'Erro ao atualizar os dados. Por favor, tente novamente mais tarde.'
+          );
 
           return throwError(() => err);
         },
@@ -114,6 +121,5 @@ export class UserFormComponent {
       email: user.email,
       password: user.password,
     });
-    console.log(this.userForm);
   }
 }

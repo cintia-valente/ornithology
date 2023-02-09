@@ -12,7 +12,6 @@ import { ToastrService } from 'ngx-toastr';
 export class UserListComponent implements OnInit {
   public users: User[] = [];
   error: boolean = false;
-  isEdit: boolean = false;
   submmited: boolean = false;
 
   constructor(
@@ -28,11 +27,12 @@ export class UserListComponent implements OnInit {
     this.error = false;
 
     this.userService.getUsers().subscribe({
-      next: (data: User[]) => console.log((this.users = data)),
+      next: (data: User[]) => (this.users = data),
 
       error: (err: HttpErrorResponse) => {
-        this.error = true;
-        alert(`Erro ao carregar usuários. Tente novamente mais tarde.`);
+        this.toastr.error(
+          'Erro ao carregar usuários. Por favor, tente novamente mais tarde'
+        );
 
         return throwError(() => err);
       },
@@ -42,12 +42,13 @@ export class UserListComponent implements OnInit {
   deleteUser(user: User) {
     this.userService.deleteUser(user.idUser).subscribe({
       next: () => {
-        alert(`Usuário excluído com sucesso.`);
         this.listUser();
+        this.toastr.error('Excluído com sucesso.');
       },
       error: (err: HttpErrorResponse) => {
-        this.error = true;
-        alert(`Erro ao excluir usuário. Tente novamente mais tarde.`);
+        this.toastr.error(
+          'Erro ao excluir usuário. Por favor, tente novamente mais tarde.'
+        );
 
         return throwError(() => err);
       },

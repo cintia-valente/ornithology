@@ -6,7 +6,6 @@ import com.example.ornithology.models.BirdModel;
 import com.example.ornithology.repository.AnnotationRepository;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
@@ -62,19 +61,6 @@ public class AnnotationService {
 
         return annotationRepository.save(annotationModel);
     }
-
-//    public AnnotationModel update(Long idAnnotation, AnnotationDto annotationDto) {
-//        Optional<AnnotationModel> annotationModelOptional  = annotationRepository.findById(idAnnotation);
-//        Optional<BirdModel> birdModelOptional = birdService.findById(annotationModelOptional.get().getBird().getId());
-//
-//        var birdModel = birdModelOptional.get();
-//        var annotationModel = annotationModelOptional.get();
-//
-//        annotationModel.setBird(birdModel);
-//
-//        AnnotationModel updatedAnnotation = annotationRepository.save(annotationModel);
-//        return updatedAnnotation;
-//    }
 
     @Transactional
     public void delete(Long idAnnotation) {

@@ -50,7 +50,7 @@ export class AnnotationListComponent {
 
       error: (err: HttpErrorResponse) => {
         this.toastr.error(
-          'Erro ao carregar usuários. Por favor, tente novamente mais tarde.'
+          'Erro ao carregar anotações. Por favor, tente novamente mais tarde.'
         );
 
         return throwError(() => err);

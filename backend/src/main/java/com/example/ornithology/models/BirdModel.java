@@ -17,22 +17,32 @@ public class BirdModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     @Column
-    private String image;
+    @Lob
+    private byte[] image;
+
     @Column(nullable = false)
     private String namePtbr;
+
     @Column(nullable = false)
     private String nameEnglish;
+
     @Column(nullable = false)
     private String nameLatin;
+
     @Column(nullable = false)
     private String size;
+
     @Column(nullable = false)
     private String genre;
+
     @Column(nullable = false)
     private String color;
+
     @Column(nullable = false)
     private String family;
+
     @Column(nullable = false)
     private String habitat;
 

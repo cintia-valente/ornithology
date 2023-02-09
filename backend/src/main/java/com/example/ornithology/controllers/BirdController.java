@@ -1,8 +1,6 @@
 package com.example.ornithology.controllers;
 
-import com.example.ornithology.dto.AnnotationDto;
 import com.example.ornithology.dto.BirdDto;
-import com.example.ornithology.models.AnnotationModel;
 import com.example.ornithology.models.BirdModel;
 import com.example.ornithology.services.BirdService;
 import org.springframework.beans.BeanUtils;
@@ -11,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:8080")
