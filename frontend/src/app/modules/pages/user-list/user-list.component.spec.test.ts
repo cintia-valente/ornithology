@@ -76,7 +76,6 @@ describe('UserListComponent', () => {
   beforeEach(() => {
     injector = getTestBed();
     fixture = TestBed.createComponent(UserListComponent);
-    //location = injector.inject(Location);
 
     userService = injector.inject(UserService);
     toastrService = injector.inject(ToastrService);
@@ -141,6 +140,7 @@ describe('UserListComponent', () => {
       .spyOn(userService, 'deleteUser')
       .mockReturnValue(of(mockUser));
 
+    //Act
     fixture.detectChanges();
     await fixture.whenStable();
 

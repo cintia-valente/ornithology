@@ -104,7 +104,7 @@ describe('UserFormComponent', () => {
       Quando: preencher o formulário
       E: clicar no botão salvar
       Então: deve chamar os serviços userService.postAnnotations e toastrService.success`, async () => {
-    //Arrange;
+    //Arrange
     const spyUserPost = jest
       .spyOn(userService, 'postUsers')
       .mockReturnValue(of(mockUser));
@@ -113,6 +113,7 @@ describe('UserFormComponent', () => {
       .spyOn(toastrService, 'success')
       .mockReturnValue({} as any);
 
+    //Act
     fixture.detectChanges();
     await fixture.whenStable();
 
@@ -124,7 +125,6 @@ describe('UserFormComponent', () => {
 
     nameInput.dispatchEvent(new Event('input'));
 
-    //Act;
     fixture.detectChanges();
     await fixture.whenStable();
 
@@ -152,7 +152,7 @@ describe('UserFormComponent', () => {
       E: preencher o formulário
       E: clicar no botão salvar
       Então: deve chamar os serviços userService.postAnnotations`, async () => {
-    //Arrange;
+    //Arrange
     const error = {
       error: 'error',
       status: 400,
@@ -163,6 +163,7 @@ describe('UserFormComponent', () => {
       .spyOn(userService, 'postUsers')
       .mockReturnValue(throwError(() => error.message));
 
+    //Act
     fixture.detectChanges();
     await fixture.whenStable();
 
@@ -174,7 +175,6 @@ describe('UserFormComponent', () => {
 
     nameInput.dispatchEvent(new Event('input'));
 
-    //Act;
     fixture.detectChanges();
     await fixture.whenStable();
 

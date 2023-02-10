@@ -170,6 +170,7 @@ describe('AnnotationListComponent', () => {
       .spyOn(annotationService, 'deleteAnnotations')
       .mockReturnValue(of(mockAnnotations));
 
+    //Act
     fixture.detectChanges();
     await fixture.whenStable();
 
@@ -200,6 +201,7 @@ describe('AnnotationListComponent', () => {
       .spyOn(annotationService, 'deleteAnnotations')
       .mockReturnValue(throwError(() => error.message));
 
+    //Act
     fixture.detectChanges();
     await fixture.whenStable();
 
