@@ -42,7 +42,7 @@ public class AnnotationService {
         Optional<AnnotationModel> annotationModelOptional  = annotationRepository.findById(idAnnotation);
         Optional<BirdModel> birdModelOptional = birdService.findById(annotationModelOptional.get().getBird().getId());
 
-        birdModelOptional.get().setImage(annotationDto.getBird().getImage());
+        //birdModelOptional.get().setImageId(annotationDto.getBird().getImageId());
         birdModelOptional.get().setNamePtbr(annotationDto.getBird().getNamePtbr());
         birdModelOptional.get().setNameEnglish(annotationDto.getBird().getNameEnglish());
         birdModelOptional.get().setNameLatin(annotationDto.getBird().getNameLatin());

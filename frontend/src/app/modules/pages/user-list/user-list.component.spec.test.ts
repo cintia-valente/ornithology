@@ -159,6 +159,7 @@ describe('UserListComponent', () => {
 
   it(`Dado: que o componente foi carregado
       Quando: atribuir um erro no serviço 
+      E: clicar no ícone de deletar
       Então: deve chamar o serviço userService.deleteUser`, async () => {
     //Arrange
     const error = {

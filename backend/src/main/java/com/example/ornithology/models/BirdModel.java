@@ -19,8 +19,7 @@ public class BirdModel implements Serializable {
     private Long id;
 
     @Column
-    @Lob
-    private byte[] image;
+    private Long imageId;
 
     @Column(nullable = false)
     private String namePtbr;

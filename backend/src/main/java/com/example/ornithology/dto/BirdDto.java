@@ -11,7 +11,7 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 public class BirdDto {
 
-    private String image;
+    private Long imageId;
     @NotBlank
     private String namePtbr;
     @NotBlank
