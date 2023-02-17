@@ -1,7 +1,6 @@
 package com.example.ornithology.controllers;
 
 import com.example.ornithology.dto.AnnotationDto;
-import com.example.ornithology.dto.BirdDto;
 import com.example.ornithology.models.AnnotationModel;
 import com.example.ornithology.models.BirdModel;
 import com.example.ornithology.services.AnnotationService;

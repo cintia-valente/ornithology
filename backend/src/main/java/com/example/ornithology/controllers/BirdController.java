@@ -1,9 +1,10 @@
 package com.example.ornithology.controllers;
 
-import com.example.ornithology.dto.BirdDto;
+import com.example.ornithology.dto.BirdResponseDto;
 import com.example.ornithology.models.BirdModel;
 import com.example.ornithology.services.BirdService;
 import com.example.ornithology.services.FileService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,38 +30,32 @@ public class BirdController {
         this.fileService = fileService;
     }
 
-//    @PostMapping
-//    public ResponseEntity<Object> postBird(@RequestBody BirdDto birdDto) {
-//        var birdModel = new BirdModel();
-//        BeanUtils.copyProperties(birdDto, birdModel);
-//        return ResponseEntity.status(HttpStatus.CREATED).body(birdService.save(birdModel));
-//    }
-
     @PostMapping
     @ResponseStatus(CREATED)
     @RequestMapping(consumes = MULTIPART_FORM_DATA_VALUE)
-
-    public ResponseEntity<BirdModel> upload(
-                                          @RequestParam(value = "file", required = false)
-                                          MultipartFile file, @RequestParam("bird") BirdDto bird) throws IOException {
+    public ResponseEntity<BirdModel> upload(@RequestParam("bird") String bird,
+                                            @RequestParam(value = "file", required = false) MultipartFile file)
+            throws IOException {
 
             var birdModel = new BirdModel();
-            BeanUtils.copyProperties(bird, birdModel);
 
-            var fileResponse  = fileService.save(file);
-            birdModel.setImageId(fileResponse.getId());
-            return ResponseEntity.status(HttpStatus.CREATED).body(birdService.save(birdModel));
+            BirdResponseDto birdDto = new ObjectMapper().readValue(bird, BirdResponseDto.class);
+            BeanUtils.copyProperties(birdDto, birdModel);
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(birdService.save(birdModel, file));
 
     }
     @GetMapping
-    public ResponseEntity<List<BirdModel>> getAllBird() {
+    public ResponseEntity<List<BirdModel>> getAllBird() throws IOException {
         return ResponseEntity.status(HttpStatus.OK).body(birdService.findAll());
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteBird(@PathVariable(value = "id") Long id) {
-        birdService.delete(id);
-        return ResponseEntity.noContent().build();
-    }
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity<Object> deleteBird(@RequestParam("bird") String bird) throws IOException {
+//        birdService.delete(bird);
+//        return ResponseEntity.noContent().build();
+//    }
+
+
 
 }

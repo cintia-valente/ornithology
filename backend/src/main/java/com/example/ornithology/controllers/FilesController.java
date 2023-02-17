@@ -1,29 +1,19 @@
 package com.example.ornithology.controllers;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
-import com.example.ornithology.dto.BirdDto;
-import com.example.ornithology.models.BirdModel;
+import com.example.ornithology.dto.AnnotationDto;
+
 import com.example.ornithology.models.FileEntity;
-import com.example.ornithology.models.FileResponse;
-
-import com.example.ornithology.services.BirdService;
 import com.example.ornithology.services.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
 @RequestMapping(value = "files",
@@ -35,7 +25,7 @@ public class FilesController {
     private final FileService fileService;
 
     @Autowired
-    public FilesController(FileService fileService) {
+    public FilesController(FileService fileService) throws IOException {
         this.fileService = fileService;
     }
 //
@@ -75,7 +65,7 @@ public class FilesController {
 //    }
 
     @GetMapping("{id}")
-    public ResponseEntity<byte[]> getFile(@PathVariable String id) {
+    public ResponseEntity<byte[]> getFile(@PathVariable Long id) throws IOException {
         Optional<FileEntity> fileEntityOptional = fileService.getFile(id);
 
         if (!fileEntityOptional.isPresent()) {

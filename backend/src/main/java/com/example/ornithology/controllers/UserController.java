@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,25 +24,25 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> postUser(@RequestBody UserDto userDto) {
+    public ResponseEntity<Object> postUser(@RequestBody UserDto userDto) throws IOException {
         var userModel = new UserModel();
         BeanUtils.copyProperties(userDto, userModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(userModel));
     }
 
     @GetMapping
-    public ResponseEntity<List<UserModel>> getAllUser() {
+    public ResponseEntity<List<UserModel>> getAllUser() throws IOException {
         return ResponseEntity.status(HttpStatus.OK).body(userService.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<UserModel>> getById(@PathVariable(value = "id") Long idUser) {
+    public ResponseEntity<Optional<UserModel>> getById(@PathVariable(value = "id") Long idUser) throws IOException {
         return ResponseEntity.status(HttpStatus.OK).body(userService.findById(idUser));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<UserModel> updateUser(@PathVariable(value = "id") Long id,
-                                                @RequestBody UserDto userDto) {
+                                                @RequestBody UserDto userDto) throws IOException {
         return ResponseEntity.ok().body(userService.update(id, userDto));
     }
 

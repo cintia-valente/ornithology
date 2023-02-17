@@ -15,6 +15,4 @@ public class UserDto {
     private String name;
     @NotBlank
     private String email;
-    @NotBlank
-    private String password;
 }

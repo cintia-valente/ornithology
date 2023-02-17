@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Bird } from '../model/bird.model';
+import { BirdDto } from '../dto/bird-response.dto';
 
 @Injectable({ providedIn: 'root' })
 export class BirdService {

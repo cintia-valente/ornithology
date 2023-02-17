@@ -38,7 +38,6 @@ public class UserService {
 
         userModel.setName(userDto.getName());
         userModel.setEmail(userDto.getEmail());
-        userModel.setPassword(userDto.getPassword());
         return userRepository.save(userModel);
     }
     public void delete(Long idUser) {

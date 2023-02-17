@@ -1,6 +1,8 @@
-export interface Bird {
+import { Bird } from '../model/bird.model';
+
+export interface BirdDto {
   id: string;
-  imageUrl?: string;
+  imageId?: string;
   namePtbr: string;
   nameEnglish: string;
   nameLatin: string;

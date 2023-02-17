@@ -32,8 +32,8 @@
           [routerLink]="['../cadastrar/', bird.namePtbr]"
         >
           <div class="card">
-            <img src="assets/img/arara.jpg" alt="" />
             <div class="card-body">
+              <img [src]="imageUrl" *ngIf="bird.imageUrl" />
               <div class="bird-namePtbr">
                 {{ bird.namePtbr }}
               </div>

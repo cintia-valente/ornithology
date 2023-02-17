@@ -7,6 +7,7 @@ import com.example.ornithology.repository.AnnotationRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,7 +39,7 @@ public class AnnotationService {
         return annotationRepository.findByBirdId(idBird);
     }
 
-    public AnnotationModel update(Long idAnnotation, AnnotationDto annotationDto) {
+    public AnnotationModel update(Long idAnnotation, AnnotationDto annotationDto) throws IOException {
         Optional<AnnotationModel> annotationModelOptional  = annotationRepository.findById(idAnnotation);
         Optional<BirdModel> birdModelOptional = birdService.findById(annotationModelOptional.get().getBird().getId());
 

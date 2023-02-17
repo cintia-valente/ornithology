@@ -132,7 +132,7 @@ export class AnnotationFormComponent implements OnInit {
       idAnnotation: annotation.idAnnotation,
       bird: {
         id: annotation.bird.id,
-        image: annotation.bird.image,
+        image: annotation.bird.imageUrl,
         namePtbr: annotation.bird.namePtbr,
         nameEnglish: annotation.bird.nameEnglish,
         nameLatin: annotation.bird.nameLatin,
