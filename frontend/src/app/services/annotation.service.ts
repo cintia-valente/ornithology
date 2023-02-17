@@ -24,7 +24,7 @@ export class AnnotationService {
     return this.http.get<Annotation[]>(this.API);
   }
 
-  getAnnotationById(idAnnotation: any): Observable<Annotation> {
+  getAnnotationById(idAnnotation: string): Observable<Annotation> {
     return this.http.get<Annotation>(`${this.API}/${idAnnotation}`);
   }
 

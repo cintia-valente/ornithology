@@ -11,7 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "FILES")
-public class FileEntity {
+public class FileModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,8 +23,8 @@ public class FileEntity {
 
     private Long size;
 
-    @Lob
-    private byte[] image;
+    @Column(name = "picByte", length = 1000)
+    private byte[] picByte;
 
 
 }

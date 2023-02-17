@@ -1,6 +1,6 @@
 export interface Bird {
-  id: string;
-  imageUrl?: string;
+  id: any;
+  imageId?: string;
   namePtbr: string;
   nameEnglish: string;
   nameLatin: string;
@@ -9,4 +9,5 @@ export interface Bird {
   color: string;
   family: string;
   habitat: string;
+  picByte: Blob;
 }

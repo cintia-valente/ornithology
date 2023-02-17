@@ -13,42 +13,13 @@
     right: 0;
     text-align: center;
     top: 0;
-    height: 35rem;
+    height: 46rem;
 
     @include media-breakpoint-up(md) {
-        height: 33rem;
+        height: 35rem;
     }
 
     @include media-breakpoint-up(xl) {
-        height: 33rem;
-    }
-
-    .form {
-        margin-left: 3rem;
-
-        @include media-breakpoint-up(md) {
-            margin-left: 0rem;
-        }
-
-        @include media-breakpoint-up(xl) {
-            margin-left: 0rem;
-        }
-
-        .form-area {
-            display: grid;
-            grid-auto-columns: 25rem;
-
-
-            @include media-breakpoint-up(md) {
-                display: grid;
-                grid-auto-columns: 41rem;
-            }
-
-            @include media-breakpoint-up(xl) {
-                display: grid;
-                grid-auto-columns: 41rem;
-            }
-
-        }
+        height: 35rem;
     }
 }

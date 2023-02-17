@@ -1,9 +1,7 @@
 package com.example.ornithology.services;
 
 import com.example.ornithology.dto.BirdResponseDto;
-import com.example.ornithology.models.AnnotationModel;
 import com.example.ornithology.models.BirdModel;
-import com.example.ornithology.models.FileEntity;
 import com.example.ornithology.repository.BirdRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,20 +31,8 @@ public class BirdService {
     }
 
     public List<BirdModel> findAll() throws IOException {
-        var birdResponse = new BirdResponseDto();
-        var birdList = birdRepository.findAll();
 
-        birdList.forEach(bird -> {
-            try {
-                birdResponse.setFile(this.fileService.getFile(bird.getImageId()));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
-
-//        fileService.getAllFiles();
-//        return birdRepository.findAll();
-        return birdList;
+       return birdRepository.findAll();
     }
 
     public Optional<BirdModel> findById(Long idBird) throws IOException {

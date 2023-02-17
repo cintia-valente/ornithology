@@ -15,7 +15,7 @@ import javax.persistence.Lob;
 public class FileResponseDto {
 
     @Id
-    private String id;
+    private Long id;
 
     private String name;
 

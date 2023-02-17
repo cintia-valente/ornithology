@@ -1,6 +1,6 @@
 package com.example.ornithology.dto;
 
-import com.example.ornithology.models.FileEntity;
+import com.example.ornithology.models.FileModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,7 +13,7 @@ import java.util.Optional;
 @NoArgsConstructor
 public class BirdResponseDto {
 
-    private Optional<FileEntity> file;
+    private Optional<FileModel> file;
     @NotBlank
     private String namePtbr;
     @NotBlank

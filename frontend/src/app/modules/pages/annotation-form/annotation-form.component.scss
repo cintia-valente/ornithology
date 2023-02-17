@@ -24,31 +24,4 @@
         height: 33rem;
     }
 
-    .form {
-        margin-left: 3rem;
-
-        @include media-breakpoint-up(md) {
-            margin-left: 0rem;
-        }
-
-        @include media-breakpoint-up(xl) {
-            margin-left: 0rem;
-        }
-
-        .form-area {
-            display: grid;
-            grid-auto-columns: 25rem;
-
-
-            @include media-breakpoint-up(md) {
-                display: grid;
-                grid-auto-columns: 41rem;
-            }
-
-            @include media-breakpoint-up(xl) {
-                display: grid;
-                grid-auto-columns: 41rem;
-            }
-        }
-    }
 }

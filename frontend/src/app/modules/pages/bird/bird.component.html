@@ -33,7 +33,7 @@
         >
           <div class="card">
             <div class="card-body">
-              <img [src]="imageUrl" *ngIf="bird.imageUrl" />
+              <img [src]="bird.picByte" *ngIf="bird.imageId" />
               <div class="bird-namePtbr">
                 {{ bird.namePtbr }}
               </div>

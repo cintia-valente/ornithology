@@ -37,14 +37,15 @@ public class BirdController {
                                             @RequestParam(value = "file", required = false) MultipartFile file)
             throws IOException {
 
-            var birdModel = new BirdModel();
+        var birdModel = new BirdModel();
 
-            BirdResponseDto birdDto = new ObjectMapper().readValue(bird, BirdResponseDto.class);
-            BeanUtils.copyProperties(birdDto, birdModel);
+        BirdResponseDto birdDto = new ObjectMapper().readValue(bird, BirdResponseDto.class);
+        BeanUtils.copyProperties(birdDto, birdModel);
 
-            return ResponseEntity.status(HttpStatus.CREATED).body(birdService.save(birdModel, file));
+        return ResponseEntity.status(HttpStatus.CREATED).body(birdService.save(birdModel, file));
 
     }
+
     @GetMapping
     public ResponseEntity<List<BirdModel>> getAllBird() throws IOException {
         return ResponseEntity.status(HttpStatus.OK).body(birdService.findAll());
@@ -55,7 +56,6 @@ public class BirdController {
 //        birdService.delete(bird);
 //        return ResponseEntity.noContent().build();
 //    }
-
 
 
 }
