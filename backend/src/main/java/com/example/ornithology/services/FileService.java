@@ -3,6 +3,11 @@ package com.example.ornithology.services;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Optional;
 import java.util.zip.DataFormatException;
@@ -13,6 +18,7 @@ import com.example.ornithology.models.FileModel;
 import com.example.ornithology.repository.FileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
@@ -40,6 +46,24 @@ public class FileService {
     public List<FileModel> getAllFiles() throws IOException {
         return fileRepository.findAll();
     }
+
+    public String saveImageFile(MultipartFile file) throws IOException {
+        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+        Path uploadDir = Paths.get("uploads");
+
+        if (!Files.exists(uploadDir)) {
+            Files.createDirectories(uploadDir);
+        }
+
+        try (InputStream inputStream = file.getInputStream()) {
+            Path filePath = uploadDir.resolve(fileName);
+            Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+            return fileName;
+        } catch (IOException e) {
+            throw new IOException("Could not save file: " + fileName, e);
+        }
+    }
+
 
     public static byte[] compressZLib(byte[] data) {
         Deflater deflater = new Deflater();
@@ -74,6 +98,8 @@ public class FileService {
         } catch (IOException ioe) {
         } catch (DataFormatException e) {
         }    return outputStream.toByteArray();}
+
+
 
 //    public void deleteFile(MultipartFile file) throws IOException {
 //       fileRepository.delete(fileEntity);
